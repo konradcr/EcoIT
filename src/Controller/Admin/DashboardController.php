@@ -21,21 +21,21 @@ class DashboardController extends AbstractDashboardController
     {
         // return parent::index();
 
-        // Option 1. You can make your dashboard redirect to some common page of your backend
+        // Option 1. You can make your welcome redirect to some common page of your backend
         //
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         return $this->redirect($adminUrlGenerator->setController(TeacherCrudController::class)->generateUrl());
 
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
+        // Option 2. You can make your welcome redirect to different pages depending on the user
         //
         // if ('jane' === $this->getUser()->getUsername()) {
         //     return $this->redirect('...');
         // }
 
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
+        // Option 3. You can render some custom template to display a proper welcome with widgets, etc.
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
-        // return $this->render('some/path/my-dashboard.html.twig');
+        // return $this->render('some/path/my-welcome.html.twig');
     }
 
     public function configureDashboard(): Dashboard
