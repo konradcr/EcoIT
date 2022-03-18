@@ -28,7 +28,7 @@ class Teacher extends User
     private $profilePicture;
 
     #[ORM\Column(type: 'boolean')]
-    private $isApproved;
+    private $isApproved = false;
 
     public function getId(): ?int
     {
