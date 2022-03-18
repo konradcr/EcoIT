@@ -79,7 +79,7 @@ class RegistrationTeacherFormType extends AbstractType
                 ],
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Créer son compte'
+                'label' => 'Envoyer'
             ])
         ;
     }
