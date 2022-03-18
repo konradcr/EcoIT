@@ -38,6 +38,8 @@ security:
             lazy: true
             provider: chain_provider
             custom_authenticator: App\Security\AppCustomAuthenticator
+            # used to check if the account is approved
+            user_checker: App\Security\UserChecker
             logout:
                 path: app_logout
                 # where to redirect after logout
