@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Student;
 use App\Entity\Teacher;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -37,7 +38,9 @@ class AdminDashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('EcoIT');
+            ->setTitle('EcoIT')
+            ->setFaviconPath('img/favicon.ico')
+            ;
     }
 
     public function configureMenuItems(): iterable
@@ -45,6 +48,7 @@ class AdminDashboardController extends AbstractDashboardController
         // yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linktoRoute('Retour à l\'accueil', 'fa fa-home', 'app_dashboard');
         yield MenuItem::linkToCrud('Formateurs', 'fa fa-list', Teacher::class);
+        yield MenuItem::linkToCrud('Apprenants', 'fa fa-list', Student::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
