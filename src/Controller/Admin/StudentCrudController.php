@@ -3,7 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Student;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class StudentCrudController extends AbstractCrudController
 {
@@ -12,14 +18,31 @@ class StudentCrudController extends AbstractCrudController
         return Student::class;
     }
 
-    /*
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Apprenant')
+            ->setEntityLabelInPlural('Apprenants')
+            ->setEntityPermission('ROLE_ADMIN')
+            ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            ImageField::new('profilePicture','Photo de profil')->hideOnForm(),
+            TextField::new('pseudo'),
+            EmailField::new('email'),
         ];
     }
-    */
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+
+            ->update(Crud::PAGE_INDEX, Action::NEW,
+                fn (Action $action) => $action->setIcon('fas fa-user-plus'))
+            ;
+    }
+
 }
