@@ -8,10 +8,21 @@ security:
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        # used to load Admin, Teacher or Student
+        chain_provider:
+            chain:
+                providers: [ app_admin_provider, app_teacher_provider, app_student_provider]
+        app_admin_provider:
             entity:
-                class: App\Entity\User
+                class: App\Entity\Admin
+                property: email
+        app_teacher_provider:
+            entity:
+                class: App\Entity\Teacher
+                property: email
+        app_student_provider:
+            entity:
+                class: App\Entity\Student
                 property: email
     firewalls:
         dev:
@@ -19,7 +30,7 @@ security:
             security: false
         main:
             lazy: true
-            provider: app_user_provider
+            provider: chain_provider
             custom_authenticator: App\Security\AppCustomAuthenticator
             logout:
                 path: app_logout
