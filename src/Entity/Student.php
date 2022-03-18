@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Un compte avec cette adresse email existe déjà.')]
+#[UniqueEntity(fields: ['pseudo'], message: 'Un compte avec ce pseudo existe déjà.')]
 class Student extends User
 {
     #[ORM\Id]
@@ -15,7 +16,7 @@ class Student extends User
     #[ORM\Column(type: 'integer')]
     protected $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $pseudo;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

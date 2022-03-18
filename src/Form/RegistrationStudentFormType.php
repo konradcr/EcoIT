@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +18,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationTeacherFormType extends AbstractType
+class RegistrationStudentFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -37,27 +36,17 @@ class RegistrationTeacherFormType extends AbstractType
                     ])
                 ],
             ])
-            ->add('firstName', TextType::class, [
-                'label' => "Prénom",
+            ->add('pseudo', TextType::class, [
+                'label' => "Pseudo",
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Saisissez un prénom.',
+                        'message' => 'Saisissez un pseudo.',
                     ]),
-                ]
-            ])
-            ->add('lastName', TextType::class, [
-                'label' => "Nom",
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Saisissez un nom.',
-                    ]),
-                ]
-            ])
-            ->add('description', TextareaType::class, [
-                'label' => "Description",
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Saisissez une description.',
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre pseudo doit comporter au moins {{ limit }} caractères.',
+                        'max' => 14,
+                        'maxMessage' => 'Votre pseudo doit comporter au max {{ limit }} caractères.',
                     ]),
                 ]
             ])
@@ -94,7 +83,7 @@ class RegistrationTeacherFormType extends AbstractType
                 ],
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer'
+                'label' => 'S\'inscrire'
             ])
         ;
     }
