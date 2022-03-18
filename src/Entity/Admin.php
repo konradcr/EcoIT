@@ -19,4 +19,9 @@ class Admin extends User
     {
         return $this->id;
     }
+
+    public function __construct(array $roles = ['ROLE_ADMIN'])
+    {
+        parent::__construct($roles);
+    }
 }

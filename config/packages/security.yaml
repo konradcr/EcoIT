@@ -24,6 +24,12 @@ security:
             entity:
                 class: App\Entity\Student
                 property: email
+
+    # used to define permissions according to roles
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_TEACHER: ROLE_USER
+        ROLE_STUDENT: ROLE_USER
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
