@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\TeacherRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TeacherRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Un compte avec cette adresse email existe déjà.')]
 class Teacher extends User
 {
     #[ORM\Id]

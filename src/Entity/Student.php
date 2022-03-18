@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Un compte avec cette adresse email existe déjà.')]
 class Student extends User
 {
     #[ORM\Id]
@@ -14,7 +16,7 @@ class Student extends User
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $username;
+    private $pseudo;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $profilePicture;
@@ -24,14 +26,14 @@ class Student extends User
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getPseudo(): ?string
     {
-        return $this->username;
+        return $this->pseudo;
     }
 
-    public function setUsername(string $username): self
+    public function setPseudo(string $pseudo): self
     {
-        $this->username = $username;
+        $this->pseudo = $pseudo;
 
         return $this;
     }
