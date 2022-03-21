@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -21,6 +23,9 @@ class Student extends User
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $profilePicture;
+
+    #[ORM\OneToMany(mappedBy: 'student', targetEntity: CourseProgress::class, orphanRemoval: true)]
+    private $courseProgress;
 
     public function getId(): ?int
     {
@@ -54,5 +59,36 @@ class Student extends User
     public function __construct(array $roles = ['ROLE_STUDENT'])
     {
         parent::__construct($roles);
+        $this->courseProgress = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection<int, CourseProgress>
+     */
+    public function getCourseProgress(): Collection
+    {
+        return $this->courseProgress;
+    }
+
+    public function addCourseProgress(CourseProgress $courseProgress): self
+    {
+        if (!$this->courseProgress->contains($courseProgress)) {
+            $this->courseProgress[] = $courseProgress;
+            $courseProgress->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourseProgress(CourseProgress $courseProgress): self
+    {
+        if ($this->courseProgress->removeElement($courseProgress)) {
+            // set the owning side to null (unless already changed)
+            if ($courseProgress->getStudent() === $this) {
+                $courseProgress->setStudent(null);
+            }
+        }
+
+        return $this;
     }
 }
