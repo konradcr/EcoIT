@@ -54,7 +54,13 @@ class LessonCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title', 'Titre'),
-            AssociationField::new('section', 'Section'),
+            AssociationField::new('section', 'Section')
+                ->setQueryBuilder(function ($queryBuilder) {
+                    return $queryBuilder
+                        ->join('entity.course', 'course')
+                        ->andWhere('course.teacher = :user')
+                        ->setParameter('user', $this->getUser());
+                }),
             IntegerField::new('orderInSection', 'Ordre'),
             UrlField::new('video', 'Lien vidéo'),
             AssociationField::new('studyMaterials', 'Ressources')->hideOnForm(),

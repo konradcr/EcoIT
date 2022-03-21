@@ -51,7 +51,14 @@ class StudyMaterialCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title', 'Nom'),
-            AssociationField::new('lesson', 'Module'),
+            AssociationField::new('lesson', 'Module')
+                ->setQueryBuilder(function ($queryBuilder) {
+                    return $queryBuilder
+                        ->join('entity.section', 'section')
+                        ->join('section.course', 'course')
+                        ->andWhere('course.teacher = :user')
+                        ->setParameter('user', $this->getUser());
+                }),
             TextField::new('path', 'Ressource')
         ];
     }

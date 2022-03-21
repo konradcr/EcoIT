@@ -51,7 +51,12 @@ class SectionCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title', 'Titre'),
-            AssociationField::new('course', 'Formation'),
+            AssociationField::new('course', 'Formation')
+                ->setQueryBuilder(function ($queryBuilder) {
+                    return $queryBuilder
+                        ->andWhere('entity.teacher = :user')
+                        ->setParameter('user', $this->getUser());
+                }),
             IntegerField::new('orderInCourse', 'Ordre'),
             AssociationField::new('lessons', 'Modules')->hideOnForm(),
         ];
