@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LessonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LessonRepository::class)]
@@ -28,6 +30,14 @@ class Lesson
     #[ORM\ManyToOne(targetEntity: Section::class, inversedBy: 'lessons')]
     #[ORM\JoinColumn(nullable: false)]
     private $section;
+
+    #[ORM\OneToMany(mappedBy: 'lesson', targetEntity: StudyMaterial::class, orphanRemoval: true)]
+    private $studyMaterials;
+
+    public function __construct()
+    {
+        $this->studyMaterials = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +100,36 @@ class Lesson
     public function setSection(?Section $section): self
     {
         $this->section = $section;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StudyMaterial>
+     */
+    public function getStudyMaterials(): Collection
+    {
+        return $this->studyMaterials;
+    }
+
+    public function addStudyMaterial(StudyMaterial $studyMaterial): self
+    {
+        if (!$this->studyMaterials->contains($studyMaterial)) {
+            $this->studyMaterials[] = $studyMaterial;
+            $studyMaterial->setLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudyMaterial(StudyMaterial $studyMaterial): self
+    {
+        if ($this->studyMaterials->removeElement($studyMaterial)) {
+            // set the owning side to null (unless already changed)
+            if ($studyMaterial->getLesson() === $this) {
+                $studyMaterial->setLesson(null);
+            }
+        }
 
         return $this;
     }
