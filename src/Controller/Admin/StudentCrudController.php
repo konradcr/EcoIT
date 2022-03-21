@@ -33,7 +33,8 @@ class StudentCrudController extends AbstractCrudController
         return [
             ImageField::new('profilePicture','Photo de profil')
                 ->setUploadDir('/public/uploads/profile_pictures')
-                ->setBasePath('/uploads/profile_pictures'),
+                ->setBasePath('/uploads/profile_pictures')
+                ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]'),
             TextField::new('pseudo'),
             EmailField::new('email'),
         ];

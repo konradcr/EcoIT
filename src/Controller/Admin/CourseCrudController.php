@@ -62,12 +62,13 @@ class CourseCrudController extends AbstractCrudController
         return [
             ImageField::new('coursePicture','Image')
                 ->setUploadDir('/public/uploads/course_pictures')
-                ->setBasePath('/uploads/course_pictures'),
+                ->setBasePath('/uploads/course_pictures')
+                ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]'),
             TextField::new('title', 'Titre'),
             TextareaField::new('description', 'Description'),
             DateField::new('creationDate', 'Date de création')->hideOnForm(),
             AssociationField::new('sections', 'Sections')->hideOnForm(),
-            IntegerField::new('students', 'Nombre de participants')->hideOnForm()
+            AssociationField::new('studentsCourseProgress', 'Nombre de participants')->hideOnForm()
         ];
     }
 

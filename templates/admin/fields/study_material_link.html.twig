@@ -1,0 +1,5 @@
+{% if field.value %}
+    <a href="{{ asset('uploads/study_materials/' ~ field.value) }}" target="_blank">Télécharger</a>
+{% else %}
+    --
+{% endif %}

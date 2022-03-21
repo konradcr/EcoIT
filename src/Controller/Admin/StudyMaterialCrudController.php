@@ -13,7 +13,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
 
 class StudyMaterialCrudController extends AbstractCrudController
@@ -59,7 +61,14 @@ class StudyMaterialCrudController extends AbstractCrudController
                         ->andWhere('course.teacher = :user')
                         ->setParameter('user', $this->getUser());
                 }),
-            TextField::new('path', 'Ressource')
+            ImageField::new('path','Ressource')
+                ->setFormType(FileUploadType::class)
+                ->setUploadDir('/public/uploads/study_materials')
+                ->setBasePath('/uploads/study_materials')
+                ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]')
+                ->hideOnIndex(),
+            TextField::new('path')->setTemplatePath('admin/fields/study_material_link.html.twig')
+                ->onlyOnIndex(),
         ];
     }
 
