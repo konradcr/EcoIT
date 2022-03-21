@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CourseController!{% endblock %}
+
+{% block body %}
+<div>
+    <h1>{{ course.title }}</h1>
+    <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="">
+    <p>{{ course.description }}</p>
+    <button>Commencer</button>
+</div>
+{% endblock %}

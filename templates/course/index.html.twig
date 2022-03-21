@@ -6,7 +6,7 @@
 <div>
     {% for course in courses %}
     <div>
-        <h2><a href="">{{ course.title }}</a></h2>
+        <h2><a href="{{ path('app_course_detail', { 'id' : course.id }) }}">{{ course.title }}</a></h2>
         <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="">
         <p>{{ course.description }}</p>
     </div>

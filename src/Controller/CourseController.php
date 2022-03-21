@@ -16,4 +16,12 @@ class CourseController extends AbstractController
             'courses' => $courseRepository->findAll(),
         ]);
     }
+
+    #[Route('/formations/{id}', name: 'app_course_detail')]
+    public function courseDetail(int $id, CourseRepository $courseRepository): Response
+    {
+        return $this->render('course/course_detail.html.twig', [
+            'course' => $courseRepository->findOneBy(['id' => $id]),
+        ]);
+    }
 }
