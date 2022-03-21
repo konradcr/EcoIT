@@ -22,5 +22,14 @@
             <h3>Sections à venir...</h3>
         {% endfor %}
     </div>
+
+    <div>
+        <h2>Formateur•trice</h2>
+        {% if course.teacher.profilePicture %}
+            <img src="{{ asset('uploads/profile_pictures/' ~ course.teacher.profilePicture) }}">
+        {% endif %}
+        <p>{{ course.teacher.firstName }} {{ course.teacher.lastName }}</p>
+        <p>{{ course.teacher.description }}</p>
+    </div>
 </div>
 {% endblock %}
