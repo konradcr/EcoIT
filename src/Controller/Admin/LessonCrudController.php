@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
@@ -24,7 +25,7 @@ class LessonCrudController extends AbstractCrudController
     {
         return $crud
             ->setEntityLabelInSingular('Module')
-            ->setEntityLabelInPlural('Module')
+            ->setEntityLabelInPlural('Modules')
             ->setEntityPermission('ROLE_TEACHER')
             ;
     }
@@ -37,7 +38,7 @@ class LessonCrudController extends AbstractCrudController
             IntegerField::new('orderInSection', 'Ordre'),
             UrlField::new('video', 'Lien vidéo'),
             AssociationField::new('studyMaterials', 'Ressources')->hideOnForm(),
-            TextareaField::new('lessonContent', 'Cours')->hideOnIndex(),
+            TextEditorField::new('lessonContent', 'Cours')->hideOnIndex(),
         ];
     }
 
