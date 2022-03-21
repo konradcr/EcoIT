@@ -34,9 +34,13 @@ class Course
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: CourseProgress::class, orphanRemoval: true)]
     private $studentsCourseProgress;
 
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Section::class, orphanRemoval: true)]
+    private $sections;
+
     public function __construct()
     {
         $this->studentsCourseProgress = new ArrayCollection();
+        $this->sections = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +132,36 @@ class Course
             // set the owning side to null (unless already changed)
             if ($studentsCourseProgress->getCourse() === $this) {
                 $studentsCourseProgress->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Section>
+     */
+    public function getSections(): Collection
+    {
+        return $this->sections;
+    }
+
+    public function addSection(Section $section): self
+    {
+        if (!$this->sections->contains($section)) {
+            $this->sections[] = $section;
+            $section->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSection(Section $section): self
+    {
+        if ($this->sections->removeElement($section)) {
+            // set the owning side to null (unless already changed)
+            if ($section->getCourse() === $this) {
+                $section->setCourse(null);
             }
         }
 
