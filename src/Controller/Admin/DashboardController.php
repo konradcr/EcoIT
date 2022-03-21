@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Entity\Section;
 use App\Entity\Student;
+use App\Entity\StudyMaterial;
 use App\Entity\Teacher;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -65,6 +66,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Formations', 'fa fa-graduation-cap', Course::class),
             MenuItem::linkToCrud('Sections', 'fa fa-book', Section::class),
             MenuItem::linkToCrud('Lessons', 'fa fa-book-open', Lesson::class),
+            MenuItem::linkToCrud('Ressources', 'fa fa-file-alt', StudyMaterial::class),
         ];
     }
 
