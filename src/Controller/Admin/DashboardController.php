@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Course;
+use App\Entity\Section;
 use App\Entity\Student;
 use App\Entity\Teacher;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -61,6 +62,7 @@ class DashboardController extends AbstractDashboardController
 
             MenuItem::section('Formations'),
             MenuItem::linkToCrud('Formations', 'fa fa-graduation-cap', Course::class),
+            MenuItem::linkToCrud('Sections', 'fa fa-book', Section::class),
         ];
     }
 
