@@ -34,7 +34,7 @@ class SectionCrudController extends AbstractCrudController
             TextField::new('title', 'Titre'),
             AssociationField::new('course', 'Formation'),
             IntegerField::new('orderInCourse', 'Ordre'),
-            AssociationField::new('lessons', 'Modules')->onlyOnDetail(),
+            AssociationField::new('lessons', 'Modules')->hideOnForm(),
         ];
     }
 
