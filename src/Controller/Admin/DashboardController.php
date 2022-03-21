@@ -53,20 +53,20 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        return [
-            MenuItem::linktoRoute('Retour à l\'accueil', 'fa fa-home', 'app_dashboard'),
-            MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out'),
+        yield MenuItem::linktoRoute('Retour à l\'accueil', 'fa fa-home', 'app_dashboard');
+        yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
 
-            MenuItem::section('Utilisateurs'),
-            MenuItem::linkToCrud('Formateurs', 'fa fa-chalkboard-teacher', Teacher::class),
-            MenuItem::linkToCrud('Apprenants', 'fa fa-user-graduate', Student::class),
+        if ($this->isGranted('ROLE_ADMIN')) {
+            yield MenuItem::section('Utilisateurs');
+            yield MenuItem::linkToCrud('Formateurs', 'fa fa-chalkboard-teacher', Teacher::class);
+            yield MenuItem::linkToCrud('Apprenants', 'fa fa-user-graduate', Student::class);
+        }
 
-            MenuItem::section('Formations'),
-            MenuItem::linkToCrud('Formations', 'fa fa-graduation-cap', Course::class),
-            MenuItem::linkToCrud('Sections', 'fa fa-book', Section::class),
-            MenuItem::linkToCrud('Lessons', 'fa fa-book-open', Lesson::class),
-            MenuItem::linkToCrud('Ressources', 'fa fa-file-alt', StudyMaterial::class),
-        ];
+        yield MenuItem::section('Formations');
+        yield MenuItem::linkToCrud('Formations', 'fa fa-graduation-cap', Course::class);
+        yield MenuItem::linkToCrud('Sections', 'fa fa-book', Section::class);
+        yield MenuItem::linkToCrud('Lessons', 'fa fa-book-open', Lesson::class);
+        yield MenuItem::linkToCrud('Ressources', 'fa fa-file-alt', StudyMaterial::class);
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu
