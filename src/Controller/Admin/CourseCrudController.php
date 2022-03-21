@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -46,8 +47,9 @@ class CourseCrudController extends AbstractCrudController
                 ->setBasePath('/uploads/course_pictures'),
             TextField::new('title', 'Titre'),
             TextareaField::new('description', 'Description'),
-            DateField::new('creationDate', 'Date de création')->hideOnForm(),
-            IntegerField::new('students', 'Nombre de participants')->hideOnForm()
+            DateField::new('creationDate', 'Date de création')->onlyOnDetail(),
+            AssociationField::new('sections', 'Sections')->onlyOnDetail(),
+            IntegerField::new('students', 'Nombre de participants')->onlyOnDetail()
         ];
     }
 
