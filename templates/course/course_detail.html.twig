@@ -8,5 +8,19 @@
     <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="">
     <p>{{ course.description }}</p>
     <button>Commencer</button>
+
+    <div>
+        <h2>Programme de la formation</h2>
+        {% for section in course.sections %}
+            <h3>{{ section.title }}</h3>
+            {% for lesson in section.lessons %}
+                <h4>{{ lesson.title }}</h4>
+            {% else %}
+                <h4>Modules à venir...</h4>
+            {% endfor %}
+        {% else %}
+            <h3>Sections à venir...</h3>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
