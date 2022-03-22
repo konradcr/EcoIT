@@ -7,7 +7,9 @@ use App\Entity\Student;
 use App\Repository\CourseProgressRepository;
 use App\Repository\CourseRepository;
 use App\Repository\LessonRepository;
+use App\Repository\SectionRepository;
 use App\Repository\StudentRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -78,5 +80,30 @@ class CourseController extends AbstractController
             'course' => $course,
             'lesson' => $lesson
         ]);
+    }
+
+    #[Route('/formation/{idCourse}/module/{idLesson}/complete', name: 'app_complete_lesson')]
+    public function completeLesson(int $idCourse, int $idLesson, LessonRepository $lessonRepository, CourseProgressRepository $courseProgressRepository, EntityManagerInterface $entityManager): Response
+    {
+        $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
+        $course = $lesson->getSection()->getCourse();
+
+        $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
+
+        $courseProgress->addLesson($lesson);
+
+        $totalOfLessons = 0;
+        foreach ($course->getSections() as $section) {
+            $totalOfLessons += count($section->getLessons());
+        }
+        $totalLessonCompleted = count($courseProgress->getLessons());
+
+        $courseProgress->setProgress($totalLessonCompleted/$totalOfLessons);
+
+        $entityManager->persist($courseProgress);
+        $entityManager->persist($lesson);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_lesson_detail', ['idCourse' => $idCourse, 'idLesson' => $idLesson]);
     }
 }

@@ -34,9 +34,13 @@ class Lesson
     #[ORM\OneToMany(mappedBy: 'lesson', targetEntity: StudyMaterial::class, orphanRemoval: true)]
     private $studyMaterials;
 
+    #[ORM\ManyToMany(targetEntity: CourseProgress::class, mappedBy: 'lessons')]
+    private $courseProgress;
+
     public function __construct()
     {
         $this->studyMaterials = new ArrayCollection();
+        $this->courseProgress = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,5 +141,32 @@ class Lesson
     public function __toString(): string
     {
         return (string) $this->getTitle();
+    }
+
+    /**
+     * @return Collection<int, CourseProgress>
+     */
+    public function getCourseProgress(): Collection
+    {
+        return $this->courseProgress;
+    }
+
+    public function addCourseProgress(CourseProgress $courseProgress): self
+    {
+        if (!$this->courseProgress->contains($courseProgress)) {
+            $this->courseProgress[] = $courseProgress;
+            $courseProgress->addLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourseProgress(CourseProgress $courseProgress): self
+    {
+        if ($this->courseProgress->removeElement($courseProgress)) {
+            $courseProgress->removeLesson($this);
+        }
+
+        return $this;
     }
 }
