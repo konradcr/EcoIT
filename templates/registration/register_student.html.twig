@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EcoIT - Devenir apprenant{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1>Prêt à prendre part au projet d’Eco Web ?</h1>
+        <h2>Inscrivez-vous afin de participer à nos formations pour concevoir un web éco-responsable !</h2>
+    </div>
+    {% if app.user %}
+        <div class="m-5 text-center">
+            Vous êtes connecté avec l'adresse {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </div>
+    {% else %}
+        <div class="border mx-auto my-5 col-md-4">
+            <div class="m-5">
+                <h3>Inscription</h3>
+                {{ form(registrationStudentForm) }}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

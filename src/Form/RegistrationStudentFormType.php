@@ -38,6 +38,7 @@ class RegistrationStudentFormType extends AbstractType
             ])
             ->add('pseudo', TextType::class, [
                 'label' => "Pseudo",
+                'attr' => ['placeholder' => 'Pseudo'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Saisissez un pseudo.',
@@ -50,17 +51,21 @@ class RegistrationStudentFormType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, [
+                'attr' => ['placeholder' => 'Email'],
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'required' => true,
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'type' => PasswordType::class,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe',
+                'attr' => ['placeholder' => 'Mot de passe']],
+                'second_options' => ['label' => 'Confirmer mot de passe',
+                    'attr' => ['placeholder' => 'Confirmer mot de passe']],
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Mot de passe'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Choisissez un mot de passe.',
