@@ -39,6 +39,7 @@ class RegistrationTeacherFormType extends AbstractType
             ])
             ->add('firstName', TextType::class, [
                 'label' => "Prénom",
+                'attr' => ['placeholder' => 'Prénom'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Saisissez un prénom.',
@@ -47,6 +48,7 @@ class RegistrationTeacherFormType extends AbstractType
             ])
             ->add('lastName', TextType::class, [
                 'label' => "Nom",
+                'attr' => ['placeholder' => 'Nom'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Saisissez un nom.',
@@ -55,6 +57,7 @@ class RegistrationTeacherFormType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => "Description",
+                'attr' => ['placeholder' => 'Détaillez vos compétences, vos spécialités, vos motivations...'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Saisissez une description.',
@@ -68,8 +71,10 @@ class RegistrationTeacherFormType extends AbstractType
                 'required' => true,
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'type' => PasswordType::class,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe',
+                    'attr' => ['placeholder' => 'Mot de passe'],],
+                'second_options' => ['label' => 'Confirmer mot de passe',
+                    'attr' => ['placeholder' => 'Confirmer mot de passe'],],
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

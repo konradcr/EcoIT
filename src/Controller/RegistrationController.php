@@ -64,6 +64,7 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
             // do anything else you need here, like send an email
             return $userAuthenticator->authenticateUser(
                 $user,
@@ -122,11 +123,12 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
+            $this->addFlash('success', 'Votre demande a été transmise ! Un membre de notre équipe prendra contact avec vous afin de fixer un entretien très rapidement ! ');
 
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('registration/register-teacher.html.twig', [
+        return $this->render('registration/register_teacher.html.twig', [
             'registrationTeacherForm' => $form->createView(),
         ]);
     }

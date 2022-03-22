@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1>Rejoignez notre équipe EcoIT !</h1>
+        <h2>Venez partager vos connaissances en tant que formateur afin de rendre le web plus éco-responsable !</h2>
+    </div>
+    {% if app.user %}
+        <div class="m-5 text-center">
+            Vous êtes connecté avec l'adresse {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </div>
+    {% else %}
+        <div class="border mx-auto my-5 col-md-4">
+            <div class="m-5">
+                <h3>Devenir formateur·trice</h3>
+                {{ form(registrationTeacherForm) }}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
