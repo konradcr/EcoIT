@@ -14,7 +14,7 @@
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         {% include('header/_header.html.twig') %}
         {% block body %}{% endblock %}
         {% include('footer/_footer.html.twig') %}
