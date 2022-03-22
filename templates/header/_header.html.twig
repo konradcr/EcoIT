@@ -1,0 +1,25 @@
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img src="{{ asset('img/logo.svg') }}" width="60" height="50" alt="">
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 hstack">
+            <li><a href="{{ path('app_home') }}" class="nav-link px-2 link-dark">Accueil</a></li>
+            <li><a href="{{ path('app_courses') }}" class="nav-link px-2 link-dark ms-auto">Formations</a></li>
+            <li><a href="{{ path('app_register_teacher') }}" class="nav-link px-2 link-dark">Devenir formateur•trice</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+            {% if app.user %}
+                {% if app.user.roles == ['ROLE_ADMIN'] or app.user.roles == ['ROLE_TEACHER'] %}
+                    <a href="{{ path('admin_dashboard') }}" class="btn btn-outline-success me-2"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                {% endif %}
+                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger me-2">Se déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="btn btn-outline-success me-2">Se connecter</a>
+                <a href="{{ path('app_register_student') }}" class="btn btn-success">S'inscrire</a>
+            {% endif %}
+        </div>
+    </header>
+</div>

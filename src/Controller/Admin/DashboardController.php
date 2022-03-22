@@ -53,7 +53,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoRoute('Retour à l\'accueil', 'fa fa-home', 'app_dashboard');
+        yield MenuItem::linktoRoute('Retour à l\'accueil', 'fa fa-home', 'app_home');
         yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
 
         if ($this->isGranted('ROLE_ADMIN')) {
