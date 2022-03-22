@@ -22,12 +22,24 @@ class CourseController extends AbstractController
     }
 
     #[Route('/formations/{id}', name: 'app_course_detail')]
-    public function courseDetail(int $id, CourseRepository $courseRepository, SectionRepository $sectionRepository, LessonRepository $lessonRepository): Response
+    public function courseDetail(int $id, CourseRepository $courseRepository): Response
     {
         $course = $courseRepository->findOneBy(['id' => $id]);
 
         return $this->render('course/course_detail.html.twig', [
             'course' => $course,
+        ]);
+    }
+
+    #[Route('/formations/{idCourse}/lesson/{idLesson}', name: 'app_lesson_detail')]
+    public function lessonDetail(int $idCourse, int $idLesson, CourseRepository $courseRepository, LessonRepository $lessonRepository): Response
+    {
+        $course = $courseRepository->findOneBy(['id' => $idCourse]);
+        $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
+
+        return $this->render('course/lesson_detail.html.twig', [
+            'course' => $course,
+            'lesson' => $lesson
         ]);
     }
 }

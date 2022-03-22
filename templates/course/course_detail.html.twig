@@ -14,7 +14,7 @@
         {% for section in course.sections %}
             <h3>{{ section.title }}</h3>
             {% for lesson in section.lessons %}
-                <h4>{{ lesson.title }}</h4>
+                <h4><a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}">{{ lesson.title }}</a></h4>
             {% else %}
                 <h4>Modules à venir...</h4>
             {% endfor %}

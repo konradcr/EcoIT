@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CourseController!{% endblock %}
+
+{% block body %}
+<div>
+    <h1>{{ lesson.title }}</h1>
+    {% if lesson.video %}
+    <iframe width="420" height="315" src="{{ lesson.video }}"></iframe>
+    {% endif %}
+    <div>{{ lesson.lessonContent | striptags}}</div>
+</div>
+{% endblock %}
