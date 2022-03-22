@@ -70,15 +70,19 @@ class CourseController extends AbstractController
         return $this->redirectToRoute('app_course_detail', ['id' => $id]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/formation/{idCourse}/module/{idLesson}', name: 'app_lesson_detail')]
-    public function lessonDetail(int $idCourse, int $idLesson, CourseRepository $courseRepository, LessonRepository $lessonRepository): Response
+    public function lessonDetail(int $idCourse, int $idLesson, CourseRepository $courseRepository, LessonRepository $lessonRepository, CourseProgressRepository $courseProgressRepository): Response
     {
         $course = $courseRepository->findOneBy(['id' => $idCourse]);
         $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
+        $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
+
 
         return $this->render('course/lesson_detail.html.twig', [
             'course' => $course,
-            'lesson' => $lesson
+            'lesson' => $lesson,
+            'courseProgress' => $courseProgress
         ]);
     }
 
