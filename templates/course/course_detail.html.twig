@@ -7,13 +7,18 @@
     <h1>{{ course.title }}</h1>
     <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="">
     <p>{{ course.description }}</p>
-    <button>Commencer</button>
+
+    {% if alreadyRegistered %}
+    <button disabled>Commencé</button>
+    {% else %}
+    <button><a href="{{ path('app_register_course', {'id': course.id}) }}">Commencer</a></button>
+    {% endif %}
 
     <div>
         <h2>Programme de la formation</h2>
-        {% for section in course.sections %}
+        {% for section in course.sections | sort((a, b) => a.orderInCourse <=> b.orderInCourse ) %}
             <h3>{{ section.title }}</h3>
-            {% for lesson in section.lessons %}
+            {% for lesson in section.lessons | sort((a, b) => a.orderInSection <=> b.orderInSection ) %}
                 <h4><a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}">{{ lesson.title }}</a></h4>
             {% else %}
                 <h4>Modules à venir...</h4>
