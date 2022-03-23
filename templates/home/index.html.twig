@@ -1,20 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}EcoIT - Accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="container-fluid">
+    <h1>Le projet d'Eco Web</h1>
+    <div class="py-5">
+        <div class="container text-center">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="card border-0">
+                    <img src="{{ asset('img/Coding_SVG.svg') }}" class="img-home-goals" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Responsabiliser</h5>
+                        <p class="card-text">En 20 ans, le poids d’une page web a été multiplié par 115. C'est 1.5 fois plus d'émissions que le transport aérien.</p>
+                    </div>
+                </div>
+                <div class="card border-0">
+                    <img src="{{ asset('img/online_school_SVG.svg') }}" class="img-home-goals" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Former</h5>
+                        <p class="card-text">EcoIT désire devenir la référence française en formations pour les développeurs soucieux de leur impact digital.</p>
+                    </div>
+                </div>
+                <div class="card border-0">
+                    <img src="{{ asset('img/Web_SVG.svg') }}" class="img-home-goals" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Protéger</h5>
+                        <p class="card-text">La crise écologique est devenue une urgence majeure. Notre objectif est de permettre un web qui pollue moins.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center bg-light">
+        <div class="d-flex flex-wrap justify-content-evenly align-items-center p-4 m-4 py-5">
+            <div class="col-5">
+                <h3 class="">Rejoignez-nous et apprenez à concevoir vos projets de manière éco-responsable !</h3>
+            </div>
+            <div class="col-3">
+                <a class="btn btn-success" href="{{ path('app_register_student') }}">Inscrivez-vous !</a>
+            </div>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/Konrad/Documents/STUDI/Evaluations/ECF/EcoIT/src/Controller/DashboardController.php'|file_link(0) }}">src/Controller/DashboardController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/Konrad/Documents/STUDI/Evaluations/ECF/EcoIT/templates/home/index.html.twig'|file_link(0) }}">templates/dashboard/index.html.twig</a></code></li>
-    </ul>
+    <div>
+        <h2>Nos dernières formations</h2>
+        <h3>Retrouvez nos dernières formations délivrées par des spécialistes du domaine.</h3>
+    </div>
+    <div class="py-5">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for course in lastCourses %}
+                    <div class="card shadow-sm mx-2">
+                        <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ course.title }}</h5>
+                            <p class="card-text">{{ course.description }}</p>
+                            <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div>Aucune formation publiée</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
