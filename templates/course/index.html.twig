@@ -5,22 +5,29 @@
 {% block body %}
 
 <div class="bg-light">
-    <div class="m-4">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Formations</li>
-            </ol>
-        </nav>
-        <div class="d-flex flex-wrap justify-content-evenly align-items-center">
-            <h1 class="col-4">Découvrez les formations EcoIT</h1>
-            <img class="col-6" src="{{ asset('img/courses.svg') }}" alt="" height="400">
+    <div class="container">
+        <div class="my-4">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Formations</li>
+                </ol>
+            </nav>
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <h1 class="col-4">Découvrez les formations EcoIT</h1>
+                <img class="col-6 text-end" src="{{ asset('img/courses.svg') }}" alt="" height="400">
+            </div>
         </div>
     </div>
 </div>
 <main class="container">
     <div class="py-5">
-        <h2>Notre offre de formations</h2>
+        <div class="d-flex mb-3">
+            <h2 class="col-9">Notre offre de formations</h2>
+            <form class="col-3 mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control" placeholder="Rechercher..." aria-label="Search">
+            </form>
+        </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for course in courses %}
                 <div class="card shadow-sm mx-2">

@@ -8,3 +8,14 @@
     height: 40vh;
     object-fit: cover;
 }
+
+.img-course-detail {
+    width: auto;
+    height: 300px;
+    object-fit: cover;
+}
+
+.img-teacher-profile {
+    height: 120px;
+    width: auto
+}
