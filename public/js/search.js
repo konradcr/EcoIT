@@ -1,6 +1,6 @@
 function searchCourse() {
     // Declare variables
-    var search, filter, list, cards, course, i, txtValue;
+    let search, filter, list, cards, course, i, txtValue;
 
     // Get search text
     search = document.getElementById('mySearch');
