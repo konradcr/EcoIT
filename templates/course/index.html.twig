@@ -3,15 +3,38 @@
 {% block title %}Hello CourseController!{% endblock %}
 
 {% block body %}
-<div>
-    {% for course in courses %}
-    <div>
-        <h2><a href="{{ path('app_course_detail', { 'id' : course.id }) }}">{{ course.title }}</a></h2>
-        <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="">
-        <p>{{ course.description }}</p>
+
+<div class="bg-light">
+    <div class="m-4">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Formations</li>
+            </ol>
+        </nav>
+        <div class="d-flex flex-wrap justify-content-evenly align-items-center">
+            <h1 class="col-4">Découvrez les formations EcoIT</h1>
+            <img class="col-6" src="{{ asset('img/courses.svg') }}" alt="" height="400">
+        </div>
     </div>
-    {% else %}
-    <div>Aucune formation</div>
-    {% endfor %}
 </div>
+<main class="container">
+    <div class="py-5">
+        <h2>Notre offre de formations</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for course in courses %}
+                <div class="card shadow-sm mx-2">
+                    <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text">{{ course.description }}</p>
+                        <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
+                    </div>
+                </div>
+            {% else %}
+                <div>Aucune formation publiée</div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
 {% endblock %}
