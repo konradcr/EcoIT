@@ -25,10 +25,10 @@
         <div class="d-flex mb-3">
             <h2 class="col-9">Notre offre de formations</h2>
             <form class="col-3 mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control" placeholder="Rechercher..." aria-label="Search">
+                <input type="search" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" id="mySearch" onkeyup="searchCourse()">
             </form>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="courseList">
             {% for course in courses %}
                 <div class="card shadow-sm mx-2">
                     <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
@@ -44,4 +44,7 @@
         </div>
     </div>
 </main>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/search.js') }}"></script>
 {% endblock %}
