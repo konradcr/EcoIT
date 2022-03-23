@@ -86,28 +86,30 @@ class CourseController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/formation/{idCourse}/module/{idLesson}/complete', name: 'app_complete_lesson')]
     public function completeLesson(int $idCourse, int $idLesson, LessonRepository $lessonRepository, CourseProgressRepository $courseProgressRepository, EntityManagerInterface $entityManager): Response
     {
-        $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
-        $course = $lesson->getSection()->getCourse();
+        if ($this->getUser() instanceof Student) {
+            $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
+            $course = $lesson->getSection()->getCourse();
 
-        $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
+            $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
 
-        $courseProgress->addLesson($lesson);
+            $courseProgress->addLesson($lesson);
 
-        $totalOfLessons = 0;
-        foreach ($course->getSections() as $section) {
-            $totalOfLessons += count($section->getLessons());
+            $totalOfLessons = 0;
+            foreach ($course->getSections() as $section) {
+                $totalOfLessons += count($section->getLessons());
+            }
+            $totalLessonCompleted = count($courseProgress->getLessons());
+
+            $courseProgress->setProgress($totalLessonCompleted/$totalOfLessons);
+
+            $entityManager->persist($courseProgress);
+            $entityManager->persist($lesson);
+            $entityManager->flush();
         }
-        $totalLessonCompleted = count($courseProgress->getLessons());
-
-        $courseProgress->setProgress($totalLessonCompleted/$totalOfLessons);
-
-        $entityManager->persist($courseProgress);
-        $entityManager->persist($lesson);
-        $entityManager->flush();
-
         return $this->redirectToRoute('app_lesson_detail', ['idCourse' => $idCourse, 'idLesson' => $idLesson]);
     }
 }

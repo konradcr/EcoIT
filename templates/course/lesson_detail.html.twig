@@ -3,15 +3,79 @@
 {% block title %}Hello CourseController!{% endblock %}
 
 {% block body %}
-<div>
-    <h1>{{ lesson.title }}</h1>
-    {% if courseProgress %}
-        <div>{{ courseProgress.progress * 100}}%</div>
-    {% endif %}
-    {% if lesson.video %}
-    <iframe width="420" height="315" src="{{ lesson.video }}"></iframe>
-    {% endif %}
-    <div>{{ lesson.lessonContent | striptags}}</div>
-    <button><a href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a></button>
+<div class="bg-light">
+    <div class="container my-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('app_courses') }}">Formations</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('app_course_detail', {'id': course.id}) }}">{{ course.title }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ lesson.title }}</li>
+            </ol>
+        </nav>
+        <div class="my-5 mx-2">
+            <h1>{{ course.title }}</h1>
+            {% if courseProgress %}
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ courseProgress.progress * 100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ courseProgress.progress * 100 }}%">{{ courseProgress.progress * 100 }}%</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
+<main class="container">
+    <div class="d-flex">
+        <div class="flex-shrink-0 p-3 bg-dark text-white" style="width: 280px;">
+            <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="d-flex align-items-center pb-3 mb-3 text-white text-decoration-none border-bottom">
+                <span class="fs-4">{{ course.title }}</span>
+            </a>
+            <ul class="list-unstyled ps-0">
+                {% for section in course.sections | sort((a, b) => a.orderInCourse <=> b.orderInCourse ) %}
+                    <li class="mb-1">
+                        <span>
+                            <i class="bi bi-chevron-right"></i>
+                            {{ section.title }}
+                        </span>
+                        <div>
+                            <ul class="fw-normal pb-1 mx-3 list-unstyled">
+                                {% for lesson in section.lessons | sort((a, b) => a.orderInSection <=> b.orderInSection ) %}
+                                    <li>
+                                        {% if courseProgress %}
+                                            {% if lesson in courseProgress.lessons %}
+                                                <i class="bi bi-check-circle-fill"></i>
+                                            {% else %}
+                                                <i class="bi bi-circle"></i>
+                                            {% endif %}
+                                        {% endif %}
+                                        <a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}" class="text-white text-decoration-none">{{ lesson.title }}</a>
+                                    </li>
+                                {% else %}
+                                    <li><em>Modules à venir</em></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="mb-1">
+                        <span><em>Sections à venir</em></span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <div class="m-4 p-3 w-100">
+            <h2>{{ lesson.title }}</h2>
+            <div class="text-center p-5">
+                {% if lesson.video %}
+                    <iframe width="560" height="315" src="{{ lesson.video }}"></iframe>
+                {% endif %}
+            </div>
+            <div>{{ lesson.lessonContent | striptags}}</div>
+            <div class="text-end">
+                <a class="btn btn-success" href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}
