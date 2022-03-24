@@ -93,6 +93,8 @@
                     <h4>Ressources</h4>
                     {% for studyMaterial in lesson.studyMaterials %}
                         <a target="_blank" class="btn-link" href="{{ asset('uploads/study_materials/' ~ studyMaterial.path) }}">{{ studyMaterial.title }}</a>
+                    {% else %}
+                        <span>Aucune ressource</span>
                     {% endfor %}
                 {% endif %}
             </div>

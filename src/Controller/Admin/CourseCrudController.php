@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Course;
+use App\Entity\Teacher;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -51,7 +52,7 @@ class CourseCrudController extends AbstractCrudController
     public function createEntity(string $entityFqcn)
     {
         $course = new Course();
-        $course->setTeacher($this->getUser());
+        $course->setTeacher();
         $course->setCreationDate(new \DateTime());
 
         return $course;

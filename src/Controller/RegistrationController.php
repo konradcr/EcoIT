@@ -23,15 +23,15 @@ class RegistrationController extends AbstractController
     #[Route('/inscription', name: 'app_register_student')]
     public function registerStudent(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppCustomAuthenticator $authenticator, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
-        $user = new Student();
-        $form = $this->createForm(RegistrationStudentFormType::class, $user);
+        $student = new Student();
+        $form = $this->createForm(RegistrationStudentFormType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
+            $student->setPassword(
                 $userPasswordHasher->hashPassword(
-                    $user,
+                    $student,
                     $form->get('plainPassword')->getData()
                 )
             );
@@ -59,15 +59,15 @@ class RegistrationController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $user->setProfilePicture($newFilename);
+                $student->setProfilePicture($newFilename);
             }
 
-            $entityManager->persist($user);
+            $entityManager->persist($student);
             $entityManager->flush();
 
             // do anything else you need here, like send an email
             return $userAuthenticator->authenticateUser(
-                $user,
+                $student,
                 $authenticator,
                 $request
             );
@@ -79,17 +79,17 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/devenir-formateur', name: 'app_register_teacher')]
-    public function registerTeacher(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppCustomAuthenticator $authenticator, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function registerTeacher(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
-        $user = new Teacher();
-        $form = $this->createForm(RegistrationTeacherFormType::class, $user);
+        $teacher = new Teacher();
+        $form = $this->createForm(RegistrationTeacherFormType::class, $teacher);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
+            $teacher->setPassword(
             $userPasswordHasher->hashPassword(
-                    $user,
+                    $teacher,
                     $form->get('plainPassword')->getData()
                 )
             );
@@ -117,10 +117,10 @@ class RegistrationController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $user->setProfilePicture($newFilename);
+                $teacher->setProfilePicture($newFilename);
             }
 
-            $entityManager->persist($user);
+            $entityManager->persist($teacher);
             $entityManager->flush();
             // do anything else you need here, like send an email
             $this->addFlash('success', 'Votre demande a été transmise ! Un membre de notre équipe prendra contact avec vous afin de fixer un entretien très rapidement ! ');
