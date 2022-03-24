@@ -88,6 +88,14 @@
                 {% endif %}
             </div>
             <div>{{ lesson.lessonContent | striptags}}</div>
+            <div class="d-flex flex-column py-3">
+                {% if lesson.studyMaterials %}
+                    <h4>Ressources</h4>
+                    {% for studyMaterial in lesson.studyMaterials %}
+                        <a target="_blank" class="btn-link" href="{{ asset('uploads/study_materials/' ~ studyMaterial.path) }}">{{ studyMaterial.title }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
             <div class="text-end">
                 <a class="btn btn-success" href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a>
             </div>
