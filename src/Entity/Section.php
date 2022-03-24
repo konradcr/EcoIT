@@ -28,9 +28,13 @@ class Section
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Lesson::class, orphanRemoval: true)]
     private $lessons;
 
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: Quiz::class, orphanRemoval: true)]
+    private $quizzes;
+
     public function __construct()
     {
         $this->lessons = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,5 +111,35 @@ class Section
     public function __toString(): string
     {
         return (string) $this->getTitle();
+    }
+
+    /**
+     * @return Collection<int, Quiz>
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): self
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): self
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // set the owning side to null (unless already changed)
+            if ($quiz->getSection() === $this) {
+                $quiz->setSection(null);
+            }
+        }
+
+        return $this;
     }
 }

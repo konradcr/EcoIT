@@ -2,8 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Admin;
+use App\Entity\Answer;
 use App\Entity\Course;
 use App\Entity\Lesson;
+use App\Entity\Question;
+use App\Entity\Quiz;
 use App\Entity\Section;
 use App\Entity\Student;
 use App\Entity\StudyMaterial;
@@ -23,23 +27,13 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin_dashboard')]
     public function index(): Response
     {
-        // return parent::index();
-
-        // Option 1. You can make your home redirect to some common page of your backend
-        //
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        return $this->redirect($adminUrlGenerator->setController(TeacherCrudController::class)->generateUrl());
 
-        // Option 2. You can make your home redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper home with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-home.html.twig');
+        if ($this->getUser() instanceof Admin) {
+            return $this->redirect($adminUrlGenerator->setController(TeacherCrudController::class)->generateUrl());
+        } elseif ($this->getUser() instanceof Teacher) {
+            return $this->redirect($adminUrlGenerator->setController(CourseCrudController::class)->generateUrl());
+        }
     }
 
     public function configureDashboard(): Dashboard
@@ -65,13 +59,22 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Formations');
         yield MenuItem::linkToCrud('Formations', 'fa fa-graduation-cap', Course::class);
         yield MenuItem::linkToCrud('Sections', 'fa fa-book', Section::class);
-        yield MenuItem::linkToCrud('Lessons', 'fa fa-book-open', Lesson::class);
+        yield MenuItem::linkToCrud('Modules', 'fa fa-book-open', Lesson::class);
         yield MenuItem::linkToCrud('Ressources', 'fa fa-file-alt', StudyMaterial::class);
+        yield MenuItem::subMenu('Quiz', 'fa fa-graduation-cap')
+            ->setSubItems([
+                MenuItem::linkToCrud('Quiz', "", Quiz::class),
+                MenuItem::linkToCrud('Questions', "", Question::class),
+                MenuItem::linkToCrud('Réponses', "", Answer::class),
+            ])
+        ;
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu
     {
-        return parent::configureUserMenu($user);
+        return parent::configureUserMenu($user)
+            ;
+
     }
 
     public function configureCrud(): Crud

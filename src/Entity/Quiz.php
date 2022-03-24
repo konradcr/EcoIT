@@ -21,6 +21,10 @@ class Quiz
     #[ORM\OneToMany(mappedBy: 'quiz', targetEntity: Question::class, orphanRemoval: true)]
     private $questions;
 
+    #[ORM\ManyToOne(targetEntity: Section::class, inversedBy: 'quizzes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $section;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -69,6 +73,23 @@ class Quiz
                 $question->setQuiz(null);
             }
         }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getTitle();
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): self
+    {
+        $this->section = $section;
 
         return $this;
     }

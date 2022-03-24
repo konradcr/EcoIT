@@ -2,8 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Course;
-use App\Entity\Teacher;
+use App\Entity\Question;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -14,18 +13,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
 
-class CourseCrudController extends AbstractCrudController
+class QuestionCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Course::class;
+        return Question::class;
     }
 
     public function __construct(EntityRepository $entityRepository)
@@ -36,7 +31,10 @@ class CourseCrudController extends AbstractCrudController
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
-        $response->andWhere('entity.teacher = :user');
+        $response->join('entity.quiz', 'quiz');
+        $response->join('quiz.section', 'section');
+        $response->join('section.course', 'course');
+        $response->andWhere('course.teacher = :user');
         $response->setParameter('user', $this->getUser());
         return $response;
     }
@@ -44,32 +42,18 @@ class CourseCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Formation')
-            ->setEntityLabelInPlural('Formations')
+            ->setEntityLabelInSingular('Question')
+            ->setEntityLabelInPlural('Questions')
             ;
     }
 
-    public function createEntity(string $entityFqcn)
-    {
-        $course = new Course();
-        $course->setTeacher($this->getUser());
-        $course->setCreationDate(new \DateTime());
-
-        return $course;
-    }
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            ImageField::new('coursePicture','Image')
-                ->setUploadDir('/public/uploads/course_pictures')
-                ->setBasePath('/uploads/course_pictures')
-                ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]'),
-            TextField::new('title', 'Titre'),
-            TextareaField::new('description', 'Description'),
-            DateField::new('creationDate', 'Date de création')->hideOnForm(),
-            AssociationField::new('sections', 'Sections')->hideOnForm(),
-            AssociationField::new('studentsCourseProgress', 'Nombre de participants')->hideOnForm()
+            TextField::new('question', 'Question'),
+            AssociationField::new('quiz', 'Quiz'),
+            AssociationField::new('answers', 'Réponses')->hideOnForm(),
         ];
     }
 
