@@ -65,7 +65,23 @@
 
 
         <div class="m-4 p-3 w-100">
-            <h2>{{ lesson.title }}</h2>
+            <div class="d-flex flex-wrap justify-content-between">
+                <h2>{{ lesson.title }}</h2>
+                <div>
+                    {% if previousLesson != lesson %}
+                        <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idLesson' : previousLesson.id, 'idCourse' : course.id}) }}">
+                            <i class="bi bi-chevron-left"></i>
+                            {{ previousLesson.title }}
+                        </a>
+                    {% endif %}
+                    {% if nextLesson != lesson %}
+                        <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idLesson' : nextLesson.id, 'idCourse' : course.id}) }}">
+                            {{ nextLesson.title }}
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
             <div class="text-center p-5">
                 {% if lesson.video %}
                     <iframe width="560" height="315" src="{{ lesson.video }}"></iframe>

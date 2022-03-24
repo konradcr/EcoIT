@@ -9,7 +9,6 @@ use App\Repository\CourseRepository;
 use App\Repository\LessonRepository;
 use App\Repository\SectionRepository;
 use App\Repository\StudentRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,17 +71,43 @@ class CourseController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/formation/{idCourse}/module/{idLesson}', name: 'app_lesson_detail')]
-    public function lessonDetail(int $idCourse, int $idLesson, CourseRepository $courseRepository, LessonRepository $lessonRepository, CourseProgressRepository $courseProgressRepository): Response
+    public function lessonDetail(int $idCourse, int $idLesson, CourseRepository $courseRepository, SectionRepository $sectionRepository ,LessonRepository $lessonRepository, CourseProgressRepository $courseProgressRepository): Response
     {
         $course = $courseRepository->findOneBy(['id' => $idCourse]);
         $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
         $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
 
+        $arrayLessons = array();
+        $sections = $sectionRepository->findBy(['course' => $course], ['orderInCourse' => 'ASC']);
+        foreach ($sections as $section) {
+            $lessons = $lessonRepository->findBy(['section' => $section], ['orderInSection' => 'ASC']);
+            foreach ($lessons as $lessonS) {
+                $arrayLessons[] = $lessonS;
+            }
+        }
+
+        $index = array_search($lesson, $arrayLessons);
+
+        $nextLesson = $lesson;
+        if ($index < count($arrayLessons) - 1) {
+            $i = $index;
+            $i++;
+            $nextLesson = $arrayLessons[$i];
+        }
+
+        $previousLesson = $lesson;
+        if ($index > 0) {
+            $j = $index;
+            $j--;
+            $previousLesson = $arrayLessons[$j];
+        }
 
         return $this->render('course/lesson_detail.html.twig', [
             'course' => $course,
             'lesson' => $lesson,
-            'courseProgress' => $courseProgress
+            'courseProgress' => $courseProgress,
+            'nextLesson' => $nextLesson,
+            'previousLesson' => $previousLesson,
         ]);
     }
 

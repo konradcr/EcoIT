@@ -10,7 +10,7 @@ function searchCourse() {
     // Get courses
     cards = list.getElementsByClassName("card");
 
-    // Loop through all list items, and hide those who don't match the search query
+    // Loop through all list courses, and hide those who don't match the search query
     for (i = 0; i < cards.length; i++) {
         // Get course name
         course = cards[i].getElementsByClassName("card-title")[0];
