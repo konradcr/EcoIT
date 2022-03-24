@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EcoIT - {{ quiz.title }}{% endblock %}
+
+{% block body %}
+    {% include('courses/lesson/_header_quiz.html.twig') %}
+    <main class="container">
+        <div class="d-flex">
+            {% include('courses/lesson/_sidebar_lesson.html.twig') %}
+            {% include('courses/lesson/_quiz.html.twig') %}
+        </div>
+    </main>
+{% endblock %}

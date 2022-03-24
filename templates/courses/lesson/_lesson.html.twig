@@ -1,0 +1,38 @@
+<div class="m-4 p-3 w-100">
+    <div class="d-flex flex-wrap justify-content-between">
+        <h2>{{ lesson.title }}</h2>
+        <div>
+            {% if previousLesson != lesson %}
+                <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idLesson' : previousLesson.id, 'idCourse' : course.id}) }}">
+                    <i class="bi bi-chevron-left"></i>
+                    {{ previousLesson.title }}
+                </a>
+            {% endif %}
+            {% if nextLesson != lesson %}
+                <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idLesson' : nextLesson.id, 'idCourse' : course.id}) }}">
+                    {{ nextLesson.title }}
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="text-center p-5">
+        {% if lesson.video %}
+            <iframe width="560" height="315" src="{{ lesson.video }}"></iframe>
+        {% endif %}
+    </div>
+    <div>{{ lesson.lessonContent | striptags}}</div>
+    <div class="d-flex flex-column py-3">
+        {% if lesson.studyMaterials %}
+            <h4>Ressources</h4>
+            {% for studyMaterial in lesson.studyMaterials %}
+                <a target="_blank" class="btn-link" href="{{ asset('uploads/study_materials/' ~ studyMaterial.path) }}">{{ studyMaterial.title }}</a>
+            {% else %}
+                <span>Aucune ressource</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="text-end">
+        <a class="btn btn-success" href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a>
+    </div>
+</div>

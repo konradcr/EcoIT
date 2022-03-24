@@ -1,0 +1,20 @@
+<div class="col-9">
+    <div class="px-5">
+        <h3 class="border-bottom border-2">Programme de la formation</h3>
+        {% for section in course.sections | sort((a, b) => a.orderInCourse <=> b.orderInCourse ) %}
+            <h4>{{ section.title }}</h4>
+            <ol>
+                {% for lesson in section.lessons | sort((a, b) => a.orderInSection <=> b.orderInSection ) %}
+                    <li><a class="text-decoration-none text-dark" href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}">{{ lesson.title }}</a></li>
+                {% else %}
+                    <h5><em>Modules à venir...</em></h5>
+                {% endfor %}
+                {% for quiz in section.quizzes %}
+                    <li class="list-unstyled"><a class="bi bi-mortarboard-fill text-decoration-none text-dark" href="{{ path('app_quiz', {'idCourse': course.id, 'idQuiz': quiz.id}) }}"> {{ quiz.title }}</a></li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <h4><em>Sections à venir...</em></h4>
+        {% endfor %}
+    </div>
+</div>

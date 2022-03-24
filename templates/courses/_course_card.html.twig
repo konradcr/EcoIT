@@ -1,0 +1,26 @@
+<div class="col">
+    <div class="card shadow-sm
+        {% if course.studentsCourseProgress %}
+        {% for courseProgress in course.studentsCourseProgress %}
+            {% if courseProgress.student == app.user %}
+                {% if courseProgress.progress == 1 %}
+                    done
+                {% else %}
+                    started
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    ">
+        {% if course.coursePicture %}
+            <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
+        {% else %}
+            <img src="{{ asset('img/logo.svg') }}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ course.title }}</h5>
+            <p class="card-text">{{ course.description }}</p>
+            <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
+        </div>
+    </div>
+</div>

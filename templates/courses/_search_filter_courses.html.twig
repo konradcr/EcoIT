@@ -1,0 +1,17 @@
+<div class="col-6 d-flex align-items-center justify-content-end">
+    {% if app.user and app.user.roles == ['ROLE_STUDENT'] %}
+        <div class="dropdown mx-2">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-funnel"></i> Filtrer
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" onclick="filterCourses('all')" href="#">Toutes</a></li>
+                <li><a class="dropdown-item" onclick="filterCourses('started')" href="#">En cours</a></li>
+                <li><a class="dropdown-item" onclick="filterCourses('done')" href="#">Terminées</a></li>
+            </ul>
+        </div>
+    {% endif %}
+    <form class="mb-3 mb-lg-0 me-lg-3">
+        <input type="search" class="form-control" placeholder="Rechercher..." aria-label="Rechercher" id="mySearch" onkeyup="searchCourse()">
+    </form>
+</div>

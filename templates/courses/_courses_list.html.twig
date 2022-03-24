@@ -1,0 +1,7 @@
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3" id="courseList">
+    {% for course in courses %}
+        {% include('courses/_course_card.html.twig') %}
+    {% else %}
+        <div>Aucune formation publiée</div>
+    {% endfor %}
+</div>

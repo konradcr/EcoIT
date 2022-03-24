@@ -3,9 +3,7 @@
 {% block title %}EcoIT - Accueil{% endblock %}
 
 {% block body %}
-
 <main>
-
     <div class="py-3">
         <div class="container">
             <h1>Le projet d'Eco Web</h1>
@@ -47,28 +45,9 @@
         <div class="py-5">
             <h2>Nos dernières formations</h2>
             <h3>Retrouvez nos dernières formations délivrées par des spécialistes du domaine.</h3>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for course in lastCourses %}
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            {% if course.coursePicture %}
-                                <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
-                            {% else %}
-                                <img src="{{ asset('img/logo.svg') }}" class="card-img-top" alt="...">
-                            {% endif %}
-
-                            <div class="card-body">
-                                <h5 class="card-title">{{ course.title }}</h5>
-                                <p class="card-text">{{ course.description }}</p>
-                                <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-                    <div>Aucune formation publiée</div>
-                {% endfor %}
-            </div>
+            {% include('courses/_courses_list.html.twig') %}
         </div>
     </div>
 </div>
+</main>
 {% endblock %}

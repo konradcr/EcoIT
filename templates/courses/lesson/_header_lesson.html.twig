@@ -1,0 +1,20 @@
+<div class="bg-light">
+    <div class="container my-3">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('app_courses') }}">Formations</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('app_course_detail', {'id': course.id}) }}">{{ course.title }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ lesson.title }}</li>
+            </ol>
+        </nav>
+        <div class="my-5 mx-2">
+            <h1>{{ course.title }}</h1>
+            {% if courseProgress %}
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ courseProgress.progress * 100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ courseProgress.progress * 100 }}%">{{ courseProgress.progress * 100 }}%</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -32,7 +32,7 @@ final class Version20220322112327 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE course_progress_lesson');
-        $this->addSql('ALTER TABLE course CHANGE title title VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE description description LONGTEXT NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE course_picture course_picture VARCHAR(255) DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
+        $this->addSql('ALTER TABLE courses CHANGE title title VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE description description LONGTEXT NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE course_picture course_picture VARCHAR(255) DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE course_progress ADD lessons_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE course_progress ADD CONSTRAINT FK_8BB59F10FED07355 FOREIGN KEY (lessons_id) REFERENCES lesson (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
         $this->addSql('CREATE INDEX IDX_8BB59F10FED07355 ON course_progress (lessons_id)');

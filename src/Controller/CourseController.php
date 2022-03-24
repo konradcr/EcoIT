@@ -7,6 +7,7 @@ use App\Entity\Student;
 use App\Repository\CourseProgressRepository;
 use App\Repository\CourseRepository;
 use App\Repository\LessonRepository;
+use App\Repository\QuizRepository;
 use App\Repository\SectionRepository;
 use App\Repository\StudentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +23,7 @@ class CourseController extends AbstractController
     {
         $courses = $courseRepository->findBy([], ['creationDate' => 'DESC']);
 
-        return $this->render('course/index.html.twig', [
+        return $this->render('courses/index.html.twig', [
             'courses' => $courses,
         ]);
     }
@@ -41,7 +42,7 @@ class CourseController extends AbstractController
             }
         }
 
-        return $this->render('course/course_detail.html.twig', [
+        return $this->render('courses/course/course_detail.html.twig', [
             'course' => $course,
             'alreadyRegistered' => $alreadyRegistered
         ]);
@@ -102,7 +103,7 @@ class CourseController extends AbstractController
             $previousLesson = $arrayLessons[$j];
         }
 
-        return $this->render('course/lesson_detail.html.twig', [
+        return $this->render('courses/lesson/lesson.html.twig', [
             'course' => $course,
             'lesson' => $lesson,
             'courseProgress' => $courseProgress,
@@ -136,5 +137,20 @@ class CourseController extends AbstractController
             $entityManager->flush();
         }
         return $this->redirectToRoute('app_lesson_detail', ['idCourse' => $idCourse, 'idLesson' => $idLesson]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/formation/{idCourse}/quiz/{idQuiz}', name: 'app_quiz')]
+    public function quiz(int $idCourse, int $idQuiz, CourseRepository $courseRepository, CourseProgressRepository $courseProgressRepository, QuizRepository $quizRepository): Response
+    {
+        $course = $courseRepository->findOneBy(['id' => $idCourse]);
+        $quiz = $quizRepository->findOneBy(['id' => $idQuiz]);
+        $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
+
+        return $this->render('courses/lesson/quiz.html.twig', [
+            'course' => $course,
+            'quiz' => $quiz,
+            'courseProgress' => $courseProgress,
+        ]);
     }
 }

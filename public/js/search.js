@@ -12,7 +12,7 @@ function searchCourse() {
 
     // Loop through all list courses, and hide those who don't match the search query
     for (i = 0; i < cards.length; i++) {
-        // Get course name
+        // Get courses name
         course = cards[i].getElementsByClassName("card-title")[0];
         txtValue = course.textContent || course.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {

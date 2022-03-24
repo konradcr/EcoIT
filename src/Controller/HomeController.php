@@ -15,7 +15,7 @@ class HomeController extends AbstractController
         $last3courses = $courseRepository->findBy([], ['creationDate' => 'DESC'], 3);
 
         return $this->render('home/index.html.twig', [
-            'lastCourses' => $last3courses
+            'courses' => $last3courses
         ]);
     }
 }
