@@ -1,11 +1,24 @@
 <div class="m-4 p-3 w-100">
-    <div class="d-flex flex-wrap justify-content-between">
+    <div class="d-flex flex-wrap justify-content-between mb-3">
         <h2>{{ quiz.title }}</h2>
-        <div>
-
-        </div>
     </div>
 
+    <div>
+        {% for question in quiz.questions %}
+            <div class="mb-3">
+                {{ question.question }}
+
+                {% for answer in question.answers %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="{{ question.question }}" id="{{ answer.answer }}">
+                    <label class="form-check-label" for="{{ answer.answer }}">
+                        {{ answer.answer }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 
     <div class="text-end">
         <a class="btn btn-success" href="">Valider</a>
