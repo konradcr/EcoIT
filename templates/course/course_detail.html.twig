@@ -23,7 +23,11 @@
                     <a class="btn btn-success" href="{{ path('app_register_course', {'id': course.id}) }}">Commencer</a>
                 {% endif %}
             </div>
-            <img class="col-6 img-course-detail" src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="" height="400">
+            {% if course.coursePicture %}
+                <img class="col-6 img-course-detail" src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="" height="400">
+            {% else %}
+                <img src="{{ asset('img/logo.svg') }}" class="col-6 img-course-detail" alt="..." height="400">
+            {% endif %}
         </div>
     </div>
 </div>
@@ -39,6 +43,9 @@
                             <li><a class="text-decoration-none text-dark" href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}">{{ lesson.title }}</a></li>
                         {% else %}
                             <h5><em>Modules à venir...</em></h5>
+                        {% endfor %}
+                        {% for quiz in section.quizzes %}
+                            <li class="list-unstyled"><a class="bi bi-mortarboard-fill text-decoration-none text-dark" href=""> {{ quiz.title }}</a></li>
                         {% endfor %}
                     </ol>
                 {% else %}

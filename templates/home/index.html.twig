@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="container-fluid">
+<main>
 
     <div class="py-3">
         <div class="container">
@@ -32,7 +32,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
     <div class="text-center bg-light">
         <div class="d-flex flex-wrap justify-content-evenly align-items-center p-4 m-4 py-5">
@@ -44,18 +43,25 @@
             </div>
         </div>
     </div>
-    <div class="py-5">
-        <div class="container">
+    <div class="container">
+        <div class="py-5">
             <h2>Nos dernières formations</h2>
             <h3>Retrouvez nos dernières formations délivrées par des spécialistes du domaine.</h3>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for course in lastCourses %}
-                    <div class="card shadow-sm mx-2">
-                        <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ course.title }}</h5>
-                            <p class="card-text">{{ course.description }}</p>
-                            <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            {% if course.coursePicture %}
+                                <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
+                            {% else %}
+                                <img src="{{ asset('img/logo.svg') }}" class="card-img-top" alt="...">
+                            {% endif %}
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.title }}</h5>
+                                <p class="card-text">{{ course.description }}</p>
+                                <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
+                            </div>
                         </div>
                     </div>
                 {% else %}

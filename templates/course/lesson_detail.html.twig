@@ -47,10 +47,14 @@
                                                 <i class="bi bi-circle"></i>
                                             {% endif %}
                                         {% endif %}
+
                                         <a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}" class="text-white text-decoration-none">{{ lesson.title }}</a>
                                     </li>
                                 {% else %}
                                     <li><em>Modules à venir</em></li>
+                                {% endfor %}
+                                {% for quiz in section.quizzes %}
+                                    <li><a class="bi bi-mortarboard-fill text-decoration-none text-white" href=""> {{ quiz.title }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
