@@ -35,6 +35,7 @@ class Course
     private $studentsCourseProgress;
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Section::class, orphanRemoval: true)]
+    #[ORM\OrderBy(['orderInCourse' => 'ASC'])]
     private $sections;
 
     public function __construct()
@@ -171,5 +172,25 @@ class Course
     public function __toString(): string
     {
         return (string) $this->getTitle();
+    }
+
+    // Determine the course content : lessons and quiz
+    public function getContents(): Collection
+    {
+        $contents = new ArrayCollection();
+        $sections = $this->getSections();
+        foreach ($sections as $section) {
+            $lessons = $section->getLessons();
+            foreach ($lessons as $lesson) {
+                $lesson->type = 'lesson';
+                $contents[] = $lesson;
+            }
+            $quizzes = $section->getQuizzes();
+            foreach ($quizzes as $quiz) {
+                $quiz->type = 'quiz';
+                $contents[] = $quiz;
+            }
+        }
+        return $contents;
     }
 }

@@ -1,0 +1,34 @@
+{% if lesson is defined  %}
+    {% set module = lesson %}
+{% elseif quiz is defined %}
+    {% set module = quiz %}
+{% endif %}
+
+<div>
+    {% if module.previous %}
+        {% if module.previous.type == 'lesson' %}
+            <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idCourse': course.id, 'idLesson': module.previous.id}) }}">
+                <i class="bi bi-chevron-left"></i>
+                {{ module.previous.title }}
+            </a>
+        {% elseif module.previous.type == 'quiz' %}
+            <a class="btn btn-outline-secondary" href="{{ path('app_quiz', {'idCourse': course.id, 'idQuiz': module.previous.id}) }}">
+                <i class="bi bi-chevron-left"></i>
+                {{ module.previous.title }}
+            </a>
+        {% endif %}
+    {% endif %}
+    {% if module.next %}
+        {% if module.next.type == 'lesson' %}
+            <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idCourse': course.id, 'idLesson': module.next.id}) }}">
+                {{ module.next.title }}
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        {% elseif module.next.type == 'quiz' %}
+            <a class="btn btn-outline-secondary" href="{{ path('app_quiz', {'idCourse': course.id, 'idQuiz': module.next.id}) }}">
+                {{ module.next.title }}
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        {% endif %}
+    {% endif %}
+</div>

@@ -1,6 +1,7 @@
 <div class="m-4 p-3 w-100">
     <div class="d-flex flex-wrap justify-content-between mb-3">
         <h2>{{ quiz.title }}</h2>
+        {% include('courses/lesson/_previous_next.html.twig') %}
     </div>
 
     <div id="#quiz">

@@ -26,6 +26,7 @@ class Section
     private $course;
 
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Lesson::class, orphanRemoval: true)]
+    #[ORM\OrderBy(['orderInSection' => 'ASC'])]
     private $lessons;
 
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: Quiz::class, orphanRemoval: true)]

@@ -169,4 +169,26 @@ class Lesson
 
         return $this;
     }
+
+    // Return the next lesson/quiz according to the course content
+    public function getNext()
+    {
+        $contents = $this->getSection()->getCourse()->getContents();
+        $index = $contents->indexOf($this);
+        if ($index < $contents->count() - 1) {
+            $index++;
+            return $contents[$index];
+        }
+    }
+
+    // Return the previous lesson/quiz according to the course content
+    public function getPrevious()
+    {
+        $contents = $this->getSection()->getCourse()->getContents();
+        $index = $contents->indexOf($this);
+        if ($index > 0) {
+            $index--;
+            return $contents[$index];
+        }
+    }
 }

@@ -1,20 +1,7 @@
 <div class="m-4 p-3 w-100">
     <div class="d-flex flex-wrap justify-content-between">
         <h2>{{ lesson.title }}</h2>
-        <div>
-            {% if previousLesson != lesson %}
-                <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idLesson' : previousLesson.id, 'idCourse' : course.id}) }}">
-                    <i class="bi bi-chevron-left"></i>
-                    {{ previousLesson.title }}
-                </a>
-            {% endif %}
-            {% if nextLesson != lesson %}
-                <a class="btn btn-outline-success" href="{{ path('app_lesson_detail', {'idLesson' : nextLesson.id, 'idCourse' : course.id}) }}">
-                    {{ nextLesson.title }}
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            {% endif %}
-        </div>
+        {% include('courses/lesson/_previous_next.html.twig') %}
     </div>
     <div class="text-center p-5">
         {% if lesson.video %}

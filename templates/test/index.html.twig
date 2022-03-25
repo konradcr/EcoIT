@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block body %}
+<div class="container my-auto">
+    <h1>{{ lesson.title }}</h1>
+    {% if lesson.previous %}
+        <button class="btn btn-outline-success">
+            Previous : {{ lesson.previous }}
+        </button>
+    {% endif %}
+
+    {% if lesson.next %}
+        <button class="btn btn-outline-success">
+            Next : {{ lesson.next }}
+        </button>
+    {% endif %}
+
+
+
+    {% for content in contents %}
+        {{ content.title }}
+        {% if content.type == 'quiz' %}
+            <b>{{ content.title }}</b>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

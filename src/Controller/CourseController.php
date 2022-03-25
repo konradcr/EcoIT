@@ -64,7 +64,6 @@ class CourseController extends AbstractController
 
             $entityManager->persist($courseProgress);
             $entityManager->flush();
-
         }
 
         return $this->redirectToRoute('app_course_detail', ['id' => $id]);
@@ -78,37 +77,10 @@ class CourseController extends AbstractController
         $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
         $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
 
-        $arrayLessons = array();
-        $sections = $sectionRepository->findBy(['course' => $course], ['orderInCourse' => 'ASC']);
-        foreach ($sections as $section) {
-            $lessons = $lessonRepository->findBy(['section' => $section], ['orderInSection' => 'ASC']);
-            foreach ($lessons as $lessonS) {
-                $arrayLessons[] = $lessonS;
-            }
-        }
-
-        $index = array_search($lesson, $arrayLessons);
-
-        $nextLesson = $lesson;
-        if ($index < count($arrayLessons) - 1) {
-            $i = $index;
-            $i++;
-            $nextLesson = $arrayLessons[$i];
-        }
-
-        $previousLesson = $lesson;
-        if ($index > 0) {
-            $j = $index;
-            $j--;
-            $previousLesson = $arrayLessons[$j];
-        }
-
         return $this->render('courses/lesson/lesson.html.twig', [
             'course' => $course,
             'lesson' => $lesson,
             'courseProgress' => $courseProgress,
-            'nextLesson' => $nextLesson,
-            'previousLesson' => $previousLesson,
         ]);
     }
 
