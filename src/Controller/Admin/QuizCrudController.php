@@ -43,7 +43,13 @@ class QuizCrudController extends AbstractCrudController
     {
         return [
             TextField::new('title', 'Titre'),
-            AssociationField::new('section', 'Section'),
+            AssociationField::new('section', 'Section')
+                ->setQueryBuilder(function ($queryBuilder) {
+                    return $queryBuilder
+                        ->join('entity.course', 'course')
+                        ->andWhere('course.teacher = :user')
+                        ->setParameter('user', $this->getUser());
+                }),
             AssociationField::new('questions', 'Questions')->hideOnForm(),
         ];
     }

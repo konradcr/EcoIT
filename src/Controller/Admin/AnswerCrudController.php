@@ -53,7 +53,15 @@ class AnswerCrudController extends AbstractCrudController
     {
         return [
             TextField::new('answer', 'Réponse'),
-            AssociationField::new('question', 'Question'),
+            AssociationField::new('question', 'Question')
+                ->setQueryBuilder(function ($queryBuilder) {
+                    return $queryBuilder
+                        ->join('entity.quiz', 'quiz')
+                        ->join('quiz.section', 'section')
+                        ->join('section.course', 'course')
+                        ->andWhere('course.teacher = :user')
+                        ->setParameter('user', $this->getUser());
+                }),
             BooleanField::new('isCorrect', 'Réponse correcte')
         ];
     }
