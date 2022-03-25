@@ -5,7 +5,7 @@ function filterCourses(filter) {
     // Get list of courses
     list = document.getElementById("courseList");
     // Get courses
-    cards = list.getElementsByClassName("card");
+    cards = list.getElementsByClassName("course");
 
     if (filter === "all") filter = "";
 

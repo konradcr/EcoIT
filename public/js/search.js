@@ -8,7 +8,7 @@ function searchCourse() {
     // Get list of courses
     list = document.getElementById("courseList");
     // Get courses
-    cards = list.getElementsByClassName("card");
+    cards = list.getElementsByClassName("course");
 
     // Loop through all list courses, and hide those who don't match the search query
     for (i = 0; i < cards.length; i++) {
