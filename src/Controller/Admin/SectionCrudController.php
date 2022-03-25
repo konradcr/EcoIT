@@ -61,7 +61,9 @@ class SectionCrudController extends AbstractCrudController
                         ->setParameter('user', $this->getUser());
                 }),
             IntegerField::new('orderInCourse', 'Ordre'),
-            AssociationField::new('lessons', 'Modules')->hideOnForm(),
+            AssociationField::new('lessons', 'Modules')
+                ->hideOnForm()
+                ->setTemplatePath('admin/fields/sections.html.twig'),
         ];
     }
 

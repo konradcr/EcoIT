@@ -53,7 +53,9 @@ class QuizCrudController extends AbstractCrudController
                         ->andWhere('course.teacher = :user')
                         ->setParameter('user', $this->getUser());
                 }),
-            AssociationField::new('questions', 'Questions')->hideOnForm(),
+            AssociationField::new('questions', 'Questions')
+                ->hideOnForm()
+                ->setTemplatePath('admin/fields/sections.html.twig'),
         ];
     }
 

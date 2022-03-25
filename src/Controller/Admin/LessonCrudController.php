@@ -66,8 +66,11 @@ class LessonCrudController extends AbstractCrudController
                 }),
             IntegerField::new('orderInSection', 'Ordre'),
             UrlField::new('video', 'Lien vidéo'),
-            AssociationField::new('studyMaterials', 'Ressources')->hideOnForm(),
-            TextEditorField::new('lessonContent', 'Cours')->hideOnIndex(),
+            AssociationField::new('studyMaterials', 'Ressources')
+                ->hideOnForm()
+                ->setTemplatePath('admin/fields/sections.html.twig'),
+            TextEditorField::new('lessonContent', 'Cours')
+                ->hideOnIndex(),
         ];
     }
 

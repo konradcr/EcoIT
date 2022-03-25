@@ -35,7 +35,10 @@ class TeacherCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            ImageField::new('profilePicture','Photo de profil')->hideOnForm(),
+            ImageField::new('profilePicture','Photo de profil')
+                ->setUploadDir('/public/uploads/profile_pictures')
+                ->setBasePath('/uploads/profile_pictures')
+                ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]'),
             EmailField::new('email'),
             TextField::new('firstName', 'Prénom'),
             TextField::new('lastName', 'Nom'),
@@ -47,9 +50,6 @@ class TeacherCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-
-            ->update(Crud::PAGE_INDEX, Action::NEW,
-                fn (Action $action) => $action->setIcon('fas fa-user-plus'))
-            ;
+            ->remove(Crud::PAGE_INDEX, Action::NEW);
     }
 }

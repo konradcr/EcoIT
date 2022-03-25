@@ -24,6 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends AbstractDashboardController
 {
+    // Define admin dashboard routes according to user role
     #[Route('/admin', name: 'admin_dashboard')]
     public function index(): Response
     {
@@ -36,6 +37,7 @@ class DashboardController extends AbstractDashboardController
         }
     }
 
+    // Configure dashboard
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -45,9 +47,10 @@ class DashboardController extends AbstractDashboardController
             ;
     }
 
+    // Configure dashboard Menus according to user role
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoRoute('Retour à l\'accueil', 'fa fa-home', 'app_home');
+        yield MenuItem::linktoRoute('Retour sur EcoIT', 'fa fa-home', 'app_home');
         yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -70,17 +73,22 @@ class DashboardController extends AbstractDashboardController
         ;
     }
 
+    // Configure UserMenu on admin dashboard
     public function configureUserMenu(UserInterface $user): UserMenu
     {
-        return parent::configureUserMenu($user)
-            ;
-
+        if ($this->getUser() instanceof Teacher) {
+            return parent::configureUserMenu($user)
+                ->setName($user->getFirstName().' '.$user->getLastName())
+                ->setAvatarUrl('uploads/profile_pictures/'.$user->getProfilePicture());
+        } else {
+            return parent::configureUserMenu($user);
+        }
     }
 
+    // Defines configuration for all CRUD controllers
     public function configureCrud(): Crud
     {
         return Crud::new()
-            // this defines the configuration for all CRUD controllers
             ->showEntityActionsInlined()
             ;
     }

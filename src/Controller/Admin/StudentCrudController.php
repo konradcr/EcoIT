@@ -11,6 +11,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AvatarField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class StudentCrudController extends AbstractCrudController
 {
@@ -28,6 +30,12 @@ class StudentCrudController extends AbstractCrudController
             ;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $student = new Student();
+        $student->setPassword($entityFqcn);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -43,10 +51,7 @@ class StudentCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-
-            ->update(Crud::PAGE_INDEX, Action::NEW,
-                fn (Action $action) => $action->setIcon('fas fa-user-plus'))
-            ;
+            ->remove(Crud::PAGE_INDEX, Action::NEW);
     }
 
 }

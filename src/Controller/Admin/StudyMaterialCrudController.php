@@ -70,7 +70,8 @@ class StudyMaterialCrudController extends AbstractCrudController
                 ->setBasePath('/uploads/study_materials')
                 ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]')
                 ->hideOnIndex(),
-            TextField::new('path')->setTemplatePath('admin/fields/study_material_link.html.twig')
+            TextField::new('path')
+                ->setTemplatePath('admin/fields/study_material_link.html.twig')
                 ->onlyOnIndex(),
         ];
     }

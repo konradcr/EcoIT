@@ -16,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
@@ -63,14 +62,19 @@ class CourseCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            AssociationField::new('teacher', 'Enseignant')
+                ->setPermission('ROLE_ADMIN'),
             ImageField::new('coursePicture','Image')
                 ->setUploadDir('/public/uploads/course_pictures')
                 ->setBasePath('/uploads/course_pictures')
                 ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]'),
             TextField::new('title', 'Titre'),
             TextareaField::new('description', 'Description'),
-            DateField::new('creationDate', 'Date de création')->hideOnForm(),
-            AssociationField::new('sections', 'Sections')->hideOnForm(),
+            DateField::new('creationDate', 'Date de création')
+                ->hideOnForm(),
+            AssociationField::new('sections', 'Sections')
+                ->hideOnForm()
+                ->setTemplatePath('admin/fields/sections.html.twig'),
             AssociationField::new('studentsCourseProgress', 'Nombre de participants')->hideOnForm()
         ];
     }

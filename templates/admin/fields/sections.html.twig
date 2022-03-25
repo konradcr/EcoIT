@@ -1,0 +1,7 @@
+{% if field.value %}
+    {% for section in field.value %}
+        <span>{{ section }}<br></span>
+    {% endfor %}
+{% else %}
+    --
+{% endif %}
