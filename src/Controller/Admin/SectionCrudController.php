@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Section;
+use App\Entity\Teacher;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -32,9 +33,11 @@ class SectionCrudController extends AbstractCrudController
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
-        $response->join('entity.course', 'course');
-        $response->andWhere('course.teacher = :user');
-        $response->setParameter('user', $this->getUser());
+        if ($this->getUser() instanceof Teacher) {
+            $response->join('entity.course', 'course');
+            $response->andWhere('course.teacher = :user');
+            $response->setParameter('user', $this->getUser());
+        }
         return $response;
     }
 
@@ -66,7 +69,8 @@ class SectionCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-
+            ->setPermission('new', 'ROLE_TEACHER')
+            ->setPermission('edit', 'ROLE_TEACHER')
             ->update(Crud::PAGE_INDEX, Action::NEW,
                 fn (Action $action) => $action->setIcon('fas fa-plus'))
             ;

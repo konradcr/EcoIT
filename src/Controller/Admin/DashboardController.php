@@ -63,9 +63,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Ressources', 'fa fa-file-alt', StudyMaterial::class);
         yield MenuItem::subMenu('Quiz', 'fa fa-graduation-cap')
             ->setSubItems([
-                MenuItem::linkToCrud('Quiz', "", Quiz::class),
-                MenuItem::linkToCrud('Questions', "", Question::class),
-                MenuItem::linkToCrud('Réponses', "", Answer::class),
+                MenuItem::linkToCrud('Quiz', "fa fa-award", Quiz::class),
+                MenuItem::linkToCrud('Questions', "fa fa-question-circle", Question::class),
+                MenuItem::linkToCrud('Réponses', "fa fa-list", Answer::class),
             ])
         ;
     }
