@@ -1,11 +1,11 @@
-<div class="col-3">
+<div class="col-md-3 pt-md-0 pt-3">
     <div class="px-2 mx-2">
         <div class="card text-center bg-dark-grey shadow-lg rounded-3">
             <div class="card-body">
-                <h2 class="card-title">Formateur•trice</h2>
+                <h4 class="card-title">Formateur•trice</h4>
                 <div class="h-100">
                     {% if course.teacher.profilePicture %}
-                        <img src="{{ asset('uploads/profile_pictures/' ~ course.teacher.profilePicture) }}" class="card-img img-teacher-profile">
+                        <img src="{{ asset('uploads/profile_pictures/' ~ course.teacher.profilePicture) }}" class="card-img img-teacher-profile" alt="photo du formateur">
                     {% endif %}
                 </div>
             </div>

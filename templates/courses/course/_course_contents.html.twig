@@ -1,5 +1,5 @@
-<div class="col-9">
-    <div class="px-5">
+<div class="col-md-9">
+    <div class="pe-5">
         <h3 class="border-bottom border-2 pb-2">Programme de la formation</h3>
         {% for section in course.sections | sort((a, b) => a.orderInCourse <=> b.orderInCourse ) %}
             <h4 class="p-2">{{ section.title }}</h4>

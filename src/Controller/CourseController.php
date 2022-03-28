@@ -32,39 +32,33 @@ class CourseController extends AbstractController
     public function courseDetail(int $id, CourseRepository $courseRepository, CourseProgressRepository $courseProgressRepository, StudentRepository $studentRepository): Response
     {
         $course = $courseRepository->findOneBy(['id' => $id]);
-        $alreadyRegistered = false;
+        $courseProgress = NULL;
 
         if ($this->getUser() instanceof Student) {
             $student = $studentRepository->findOneBy(['id' => $this->getUser()->getId()]);
-            $courseProgressExist = $courseProgressRepository->findBy(['course' => $course, 'student' => $student]);
-            if ($courseProgressExist) {
-                $alreadyRegistered = true;
-            }
+            $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $student]);
         }
 
         return $this->render('courses/course/course_detail.html.twig', [
             'course' => $course,
-            'alreadyRegistered' => $alreadyRegistered
+            'courseProgress' => $courseProgress
         ]);
     }
 
+    #[IsGranted('ROLE_STUDENT')]
     #[Route('/formation/{id}/rejoindre', name: 'app_register_course')]
-    #[IsGranted('ROLE_USER')]
     public function registerCourse(int $id, CourseRepository $courseRepository, StudentRepository $studentRepository, EntityManagerInterface $entityManager): Response
     {
+        $student = $studentRepository->findOneBy(['id' => $this->getUser()->getId()]);
+        $course = $courseRepository->findOneBy(['id' => $id]);
 
-        if ($this->getUser() instanceof Student) {
-            $student = $studentRepository->findOneBy(['id' => $this->getUser()->getId()]);
-            $course = $courseRepository->findOneBy(['id' => $id]);
+        $courseProgress = new CourseProgress();
+        $courseProgress->setStudent($student);
+        $courseProgress->setCourse($course);
+        $courseProgress->setProgress(0);
 
-            $courseProgress = new CourseProgress();
-            $courseProgress->setStudent($student);
-            $courseProgress->setCourse($course);
-            $courseProgress->setProgress(0);
-
-            $entityManager->persist($courseProgress);
-            $entityManager->flush();
-        }
+        $entityManager->persist($courseProgress);
+        $entityManager->flush();
 
         return $this->redirectToRoute('app_course_detail', ['id' => $id]);
     }
@@ -84,30 +78,29 @@ class CourseController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_STUDENT')]
     #[Route('/formation/{idCourse}/module/{idLesson}/complete', name: 'app_complete_lesson')]
     public function completeLesson(int $idCourse, int $idLesson, LessonRepository $lessonRepository, CourseProgressRepository $courseProgressRepository, EntityManagerInterface $entityManager): Response
     {
-        if ($this->getUser() instanceof Student) {
-            $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
-            $course = $lesson->getSection()->getCourse();
+        $lesson = $lessonRepository->findOneBy(['id' => $idLesson]);
+        $course = $lesson->getSection()->getCourse();
 
-            $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
+        $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
 
-            $courseProgress->addLesson($lesson);
+        $courseProgress->addLesson($lesson);
 
-            $totalOfLessons = 0;
-            foreach ($course->getSections() as $section) {
-                $totalOfLessons += count($section->getLessons());
-            }
-            $totalLessonCompleted = count($courseProgress->getLessons());
-
-            $courseProgress->setProgress($totalLessonCompleted/$totalOfLessons);
-
-            $entityManager->persist($courseProgress);
-            $entityManager->persist($lesson);
-            $entityManager->flush();
+        $totalOfLessons = 0;
+        foreach ($course->getSections() as $section) {
+            $totalOfLessons += count($section->getLessons());
         }
+        $totalLessonCompleted = count($courseProgress->getLessons());
+
+        $courseProgress->setProgress($totalLessonCompleted/$totalOfLessons);
+
+        $entityManager->persist($courseProgress);
+        $entityManager->persist($lesson);
+        $entityManager->flush();
+
         return $this->redirectToRoute('app_lesson_detail', ['idCourse' => $idCourse, 'idLesson' => $idLesson]);
     }
 

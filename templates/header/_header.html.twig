@@ -1,16 +1,16 @@
 <div class="container">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between  py-3 mb-4 border-bottom">
+        <a href="{{ path('app_home') }}" class="d-flex align-items-center col-md-auto mb-2 mb-md-0 text-decoration-none">
             <img src="{{ asset('img/logo.svg') }}" width="60" height="50" alt="">
         </a>
 
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 hstack">
-            <li><a href="{{ path('app_home') }}" class="nav-link px-2">Accueil</a></li>
-            <li><a href="{{ path('app_courses') }}" class="nav-link px-2 ms-auto">Formations</a></li>
-            <li><a href="{{ path('app_register_teacher') }}" class="nav-link px-2">Devenir formateur•trice</a></li>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 ">
+            <li><a href="{{ path('app_home') }}" class="nav-link px-md-2">Accueil</a></li>
+            <li><a href="{{ path('app_courses') }}" class="nav-link px-md-2">Formations</a></li>
+            <li><a href="{{ path('app_register_teacher') }}" class="nav-link px-md-2">Devenir formateur•trice</a></li>
         </ul>
 
-        <div class="col-md-3 text-end ">
+        <div class="col-md-auto text-end ">
             {% if app.user %}
                 <div class="dropdown d-flex justify-content-end">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -19,7 +19,13 @@
                                 <img src="{{ asset('uploads/profile_pictures/' ~ app.user.profilePicture ) }}" alt="" width="32" height="32" class="rounded-circle me-2">
                             {% endif %}
                         {% endif %}
-                        <strong>{{ app.user.email }}</strong>
+                        {% if app.user.roles == ['ROLE_TEACHER'] %}
+                            <strong>{{ app.user.firstName }} {{ app.user.lastName }}</strong>
+                        {% elseif app.user.roles == ['ROLE_STUDENT'] %}
+                            <strong>{{ app.user.pseudo }}</strong>
+                        {% else %}
+                            <strong>{{ app.user.email }}</strong>
+                        {% endif %}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
                         {% if app.user.roles == ['ROLE_ADMIN'] or app.user.roles == ['ROLE_TEACHER'] %}

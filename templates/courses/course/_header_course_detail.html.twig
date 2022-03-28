@@ -7,25 +7,29 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ course.title }}</li>
             </ol>
         </nav>
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="col-4">
+        <div class="d-flex flex-wrap justify-content-md-between justify-content-center align-items-center">
+            <div class="col-md-7 text-start me-auto">
                 <h1>{{ course.title }}</h1>
                 <h3>{{ course.description }}</h3>
                 <div class="py-4">
-                    {% if app.user and app.user.roles == ['ROLE_STUDENT'] %}
-                        {% if alreadyRegistered %}
-                            <button class="btn btn-outline-success" disabled>Commencée</button>
+                    {% if courseProgress %}
+                        {% if courseProgress.progress and courseProgress.progress == 1 %}
+                            <button class="btn btn-outline-success" disabled>Terminée</button>
                         {% else %}
-                            <a class="btn btn-success" href="{{ path('app_register_course', {'id': course.id}) }}">Commencer</a>
+                            <button class="btn btn-outline-success" disabled>En cours</button>
                         {% endif %}
+                    {% elseif app.user and app.user.roles==['ROLE_STUDENT'] %}
+                        <a class="btn btn-success" href="{{ path('app_register_course', {'id': course.id}) }}">Commencer</a>
                     {% endif %}
                 </div>
             </div>
-            {% if course.coursePicture %}
-                <img class="col-6 img-course-detail" src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="" height="400">
-            {% else %}
-                <img src="{{ asset('img/logo.svg') }}" class="col-6 img-course-detail" alt="..." height="400">
-            {% endif %}
+            <div class="col-md-5 text-md-end">
+                {% if course.coursePicture %}
+                    <img class="img-course-detail" src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="" height="400">
+                {% else %}
+                    <img src="{{ asset('img/logo.svg') }}" class="img-course-detail" alt="..." height="400">
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="col course
+<div class="col py-md-0 py-3 course
     {% if course.studentsCourseProgress %}
         {% for courseProgress in course.studentsCourseProgress %}
             {% if courseProgress.student == app.user %}
@@ -12,7 +12,7 @@
         {% endif %}
     ">
     <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="text-decoration-none text-black">
-        <div class="card shadow-lg bg-light-green rounded-3 p-3">
+        <div class="card shadow-lg bg-light-green rounded-3 p-3 h-100">
             {% if course.coursePicture %}
                 <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="image cours">
             {% else %}
@@ -21,9 +21,9 @@
             <div class="card-body">
                 <h5 class="card-title fw-bold bg-light-green">{{ course.title }}</h5>
                 <p class="card-text bg-light-green">{{ course.description }}</p>
-                <div class="text-end">
-                    <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
-                </div>
+            </div>
+            <div class="text-end pt-2 mt-auto">
+                <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
             </div>
         </div>
     </a>
