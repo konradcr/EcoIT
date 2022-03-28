@@ -4,7 +4,7 @@
         {% include('courses/lesson/_previous_next.html.twig') %}
     </div>
 
-    <div id="#quiz">
+    <div id="#quiz" class="my-auto">
         {% for question in quiz.questions %}
             <div class="mb-3">
                 {{ question.question }}

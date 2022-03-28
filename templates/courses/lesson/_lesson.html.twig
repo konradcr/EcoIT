@@ -5,7 +5,7 @@
     </div>
     <div class="text-center p-5">
         {% if lesson.video %}
-            <iframe width="560" height="315" src="{{ lesson.video }}"></iframe>
+            <iframe width="560" height="315" src="{{ lesson.video }}" class="rounded-2 shadow-sm"></iframe>
         {% endif %}
     </div>
     <div>{{ lesson.lessonContent | striptags}}</div>
@@ -13,13 +13,15 @@
         {% if lesson.studyMaterials %}
             <h4>Ressources</h4>
             {% for studyMaterial in lesson.studyMaterials %}
-                <a target="_blank" class="btn-link" href="{{ asset('uploads/study_materials/' ~ studyMaterial.path) }}">{{ studyMaterial.title }}</a>
+                <a target="_blank" class="text-decoration-underline" href="{{ asset('uploads/study_materials/' ~ studyMaterial.path) }}">{{ studyMaterial.title }}</a>
             {% else %}
                 <span>Aucune ressource</span>
             {% endfor %}
         {% endif %}
     </div>
-    <div class="text-end">
-        <a class="btn btn-success" href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a>
-    </div>
+    {% if app.user and app.user.roles == ["ROLE_STUDENT"] %}
+        <div class="text-end">
+            <a class="btn btn-success" href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a>
+        </div>
+    {% endif %}
 </div>

@@ -11,16 +11,20 @@
         {% endfor %}
         {% endif %}
     ">
-    <div class="card shadow-sm">
-        {% if course.coursePicture %}
-            <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="...">
-        {% else %}
-            <img src="{{ asset('img/logo.svg') }}" class="card-img-top" alt="...">
-        {% endif %}
-        <div class="card-body">
-            <h5 class="card-title">{{ course.title }}</h5>
-            <p class="card-text">{{ course.description }}</p>
-            <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
+    <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="text-decoration-none text-black">
+        <div class="card shadow-lg bg-light-green rounded-3 p-3">
+            {% if course.coursePicture %}
+                <img src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" class="card-img-top" alt="image cours">
+            {% else %}
+                <img src="{{ asset('img/logo.svg') }}" class="card-img-top" alt="image cours défaut">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title fw-bold bg-light-green">{{ course.title }}</h5>
+                <p class="card-text bg-light-green">{{ course.description }}</p>
+                <div class="text-end">
+                    <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="btn btn-success">Consulter</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </a>
 </div>

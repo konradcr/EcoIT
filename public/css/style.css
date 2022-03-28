@@ -1,6 +1,85 @@
+/* Fonts */
+header, h1, h2, h3, h4, h5 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-family: 'Hind Madurai', sans-serif;
+    color: #4A5759;
+}
+
+/* Background Colors */
+.bg-light-green {
+    background-color: #F2F7F2;
+    color: #4A5759;
+}
+
+.bg-green {
+    background-color: #5DA37B;
+    color: white;
+}
+
+.bg-dark-grey {
+    background-color: #4A5759;
+    color: white;
+}
+
+/* Header */
+header .nav-link {
+    color: #4A5759;
+    font-weight: bolder;
+}
+
+header .nav-link:hover {
+    color: #5DA37B;
+}
+
+.breadcrumb {
+    font-size: 1.2rem;
+}
+
+/* Titles */
+h1 {
+    font-weight: bolder;
+}
+
+/* Buttons */
+.btn-success {
+    background-color: #5DA37B;
+}
+
+.btn-success:hover {
+    background-color: #4A5759;
+}
+
+.btn-outline-success {
+    color: #5DA37B;
+    border-color: #5DA37B;
+}
+
+.btn-outline-success:hover, .btn-outline-success:active, .btn-outline-success:focus {
+    background-color: #5DA37B;
+}
+
+.dropdown-item:focus:active:hover {
+    background-color: #5DA37B;
+}
+
+/* Link */
+a {
+    color: #5DA37B;
+    text-decoration-line: none;
+}
+
+a:hover {
+    color: #4A5759;
+}
+
+/* Images */
+
 .img-home-goals {
     width: 100%;
-    height: 40vh;
+    height: 30vh;
 }
 
 .card-img-top {
@@ -12,14 +91,16 @@
 .img-course-detail {
     width: auto;
     height: 300px;
+    padding-bottom: 20px;
     object-fit: cover;
 }
 
 .img-teacher-profile {
-    height: 120px;
-    width: auto
+    height: 100px;
+    width: 100px;
+    border-radius:50%;
+    border:solid white 1px ;
 }
 
-.dropdown-item:focus:active:hover {
-    background-color: #5DA37B;
-}
+
+

@@ -1,9 +1,9 @@
-<div class="bg-light">
+<div class="bg-light-green">
     <div class="container my-3">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
-                <li class="breadcrumb-item"><a href="{{ path('app_courses') }}">Formations</a></li>
+                <li class="breadcrumb-item"><a class="fw-bold" href="{{ path('app_home') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a class="fw-bold" href="{{ path('app_courses') }}">Formations</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ course.title }}</li>
             </ol>
         </nav>
@@ -11,11 +11,15 @@
             <div class="col-4">
                 <h1>{{ course.title }}</h1>
                 <h3>{{ course.description }}</h3>
-                {% if alreadyRegistered %}
-                    <button class="btn btn-outline-success" disabled>Commencée</button>
-                {% else %}
-                    <a class="btn btn-success" href="{{ path('app_register_course', {'id': course.id}) }}">Commencer</a>
-                {% endif %}
+                <div class="py-4">
+                    {% if app.user and app.user.roles == ['ROLE_STUDENT'] %}
+                        {% if alreadyRegistered %}
+                            <button class="btn btn-outline-success" disabled>Commencée</button>
+                        {% else %}
+                            <a class="btn btn-success" href="{{ path('app_register_course', {'id': course.id}) }}">Commencer</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
             {% if course.coursePicture %}
                 <img class="col-6 img-course-detail" src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="" height="400">

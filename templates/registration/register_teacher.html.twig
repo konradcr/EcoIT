@@ -10,12 +10,12 @@
     </div>
     {% if app.user %}
         <div class="m-5 text-center">
-            Vous êtes connecté avec l'adresse {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            Vous êtes connecté avec l'adresse {{ app.user.username }}, <a class="fw-bold" href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% else %}
-        <div class="border mx-auto my-5 col-md-4">
+        <div class="border mx-auto my-5 col-md-6 rounded-3 bg-light-green">
             <div class="m-5">
-                <h3>Devenir formateur·trice</h3>
+                <h3 class="text-center">Devenir formateur·trice</h3>
                 {{ form(registrationTeacherForm) }}
             </div>
         </div>

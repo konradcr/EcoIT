@@ -6,47 +6,49 @@
 <main>
     <div class="py-3">
         <div class="container">
-            <h1>Le projet d'Eco Web</h1>
+            <h1 class="pb-5">Le projet d'Eco Web</h1>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 text-center">
                 <div class="card border-0">
                     <img src="{{ asset('img/Coding_SVG.svg') }}" class="img-home-goals" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Responsabiliser</h5>
+                        <h5 class="card-title fw-bold">Responsabiliser</h5>
                         <p class="card-text">En 20 ans, le poids d’une page web a été multiplié par 115. C'est 1.5 fois plus d'émissions que le transport aérien.</p>
                     </div>
                 </div>
                 <div class="card border-0">
                     <img src="{{ asset('img/online_school_SVG.svg') }}" class="img-home-goals" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Former</h5>
+                        <h5 class="card-title fw-bold">Former</h5>
                         <p class="card-text">EcoIT désire devenir la référence française en formations pour les développeurs soucieux de leur impact digital.</p>
                     </div>
                 </div>
                 <div class="card border-0">
                     <img src="{{ asset('img/Web_SVG.svg') }}" class="img-home-goals" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Protéger</h5>
+                        <h5 class="card-title fw-bold">Protéger</h5>
                         <p class="card-text">La crise écologique est devenue une urgence majeure. Notre objectif est de permettre un web qui pollue moins.</p>
                     </div>
                 </div>
             </div>
     </div>
-    <div class="text-center bg-light">
-        <div class="d-flex flex-wrap justify-content-evenly align-items-center p-4 m-4 py-5">
-            <div class="col-5">
-                <h3 class="">Rejoignez-nous et apprenez à concevoir vos projets de manière éco-responsable !</h3>
-            </div>
-            <div class="col-3">
-                <a class="btn btn-success" href="{{ path('app_register_student') }}">Inscrivez-vous !</a>
-            </div>
+    <div class="text-center bg-light-green my-5">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-evenly align-items-center p-4 m-4 py-5">
+                <div class="col-8">
+                    <h3 class="">Rejoignez-nous et apprenez à concevoir vos projets de manière éco-responsable !</h3>
+                </div>
+                <div class="col-4 text-end">
+                    <a class="btn btn-lg btn-success" href="{{ path('app_register_student') }}">Inscrivez-vous !</a>
+                </div>
+             </div>
         </div>
     </div>
     <div class="container">
-        <div class="py-5">
-            <h2>Nos dernières formations</h2>
+        <div class="pb-5">
+            <h2 class="fw-bold">Nos dernières formations</h2>
             <h3>Retrouvez nos dernières formations délivrées par des spécialistes du domaine.</h3>
-            {% include('courses/_courses_list.html.twig') %}
         </div>
+        {% include('courses/_courses_list.html.twig') %}
     </div>
 </div>
 </main>

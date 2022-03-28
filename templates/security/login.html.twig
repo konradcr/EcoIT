@@ -3,7 +3,7 @@
 {% block title %}EcoIT - Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
+<form method="post" class="container my-auto">
     <h1 class="text-center">Connectez-vous pour reprendre votre formation !</h1>
     {% if error %}
         <div class="alert alert-danger m-5 text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -15,12 +15,12 @@
     {% endfor %}
     {% if app.user %}
         <div class="m-5 text-center">
-            Vous êtes connecté avec l'adresse {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            Vous êtes connecté avec l'adresse {{ app.user.username }}, <a class="fw-bold" href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% else %}
-        <div class="border mx-auto my-5 col-md-4">
+        <div class="border mx-auto my-5 col-md-4 rounded-3 bg-light-green">
             <div class="m-5">
-                <h3 class="h3 mb-3 font-weight-normal">Connexion</h3>
+                <h3 class="h3 mb-3 font-weight-normal text-center">Connexion</h3>
                 <div class="my-3">
                     <label for="inputEmail">Email</label>
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="Email">
@@ -32,7 +32,9 @@
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <button class="btn btn btn-success" type="submit">Se connecter</button>
+                <div class="text-center pt-2">
+                    <button class="btn btn btn-success" type="submit">Se connecter</button>
+                </div>
             </div>
         </div>
     {% endif %}

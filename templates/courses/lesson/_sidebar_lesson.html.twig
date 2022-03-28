@@ -1,14 +1,14 @@
-<div class="flex-shrink-0 p-3 bg-dark text-white" style="width: 280px;">
+<div class="flex-shrink-0 p-3 bg-dark-grey text-white shadow-lg rounded-3 my-4 h-100" style="width: 280px;">
     <a href="{{ path('app_course_detail', {'id': course.id}) }}" class="d-flex align-items-center pb-3 mb-3 text-white text-decoration-none border-bottom">
         <span class="fs-4">{{ course.title }}</span>
     </a>
     <ul class="list-unstyled ps-0">
         {% for section in course.sections | sort((a, b) => a.orderInCourse <=> b.orderInCourse ) %}
-            <li class="mb-1">
-                        <span>
-                            <i class="bi bi-chevron-right"></i>
-                            {{ section.title }}
-                        </span>
+            <li class="py-2">
+                <span class="fw-bold">
+                    <i class="bi bi-chevron-right"></i>
+                    {{ section.title }}
+                </span>
                 <div>
                     <ul class="fw-normal pb-1 mx-3 list-unstyled">
                         {% for lesson in section.lessons | sort((a, b) => a.orderInSection <=> b.orderInSection ) %}
@@ -21,7 +21,7 @@
                                     {% endif %}
                                 {% endif %}
 
-                                <a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}" class="text-white text-decoration-none">{{ lesson.title }}</a>
+                                <a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}" class="text-white">{{ lesson.title }}</a>
                             </li>
                         {% else %}
                             <li><em>Modules à venir</em></li>
