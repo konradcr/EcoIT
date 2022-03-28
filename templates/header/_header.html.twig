@@ -10,12 +10,32 @@
             <li><a href="{{ path('app_register_teacher') }}" class="nav-link px-2">Devenir formateur•trice</a></li>
         </ul>
 
-        <div class="col-md-3 text-end">
+        <div class="col-md-3 text-end ">
             {% if app.user %}
-                {% if app.user.roles == ['ROLE_ADMIN'] or app.user.roles == ['ROLE_TEACHER'] %}
-                    <a href="{{ path('admin_dashboard') }}" class="btn btn-outline-success me-2"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                {% endif %}
-                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger me-2">Se déconnecter</a>
+                <div class="dropdown d-flex justify-content-end">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if app.user.roles == ['ROLE_STUDENT'] or app.user.roles == ['ROLE_TEACHER'] %}
+                            {% if app.user.profilePicture %}
+                                <img src="{{ asset('uploads/profile_pictures/' ~ app.user.profilePicture ) }}" alt="" width="32" height="32" class="rounded-circle me-2">
+                            {% endif %}
+                        {% endif %}
+                        <strong>{{ app.user.email }}</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
+                        {% if app.user.roles == ['ROLE_ADMIN'] or app.user.roles == ['ROLE_TEACHER'] %}
+                            <li><a class="dropdown-item" href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+                        {% endif %}
+                        {% if app.user.roles == ['ROLE_STUDENT'] %}
+                            <li><a class="dropdown-item" href="{{ path('app_profile_student') }}">Profil</a></li>
+                        {% endif %}
+                        {% if app.user.roles == ['ROLE_TEACHER'] %}
+                            <li><a class="dropdown-item" href="{{ path('app_profile_teacher') }}">Profil</a></li>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                    </ul>
+                </div>
+
             {% else %}
                 <a href="{{ path('app_login') }}" class="btn btn-outline-success me-2">Se connecter</a>
                 <a href="{{ path('app_register_student') }}" class="btn btn-success">S'inscrire</a>
