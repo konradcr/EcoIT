@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EcoIT - Modifier mon profil{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="bg-light-green rounded-3 p-3 col-md-4 mx-auto my-4">
+        <h2 class="mb-3">Modifier mon profil</h2>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control"  id="email" placeholder="{{ app.user.email }}" readonly disabled>
+        </div>
+        {{ form(editStudentProfileForm) }}
+    </div>
+</div>
+{% endblock %}

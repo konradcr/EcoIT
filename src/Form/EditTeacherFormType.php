@@ -59,7 +59,7 @@ class EditTeacherFormType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer'
+                'label' => 'Enregistrer'
             ])
         ;
     }

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EcoIT - Mon profil{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="bg-light-green rounded-3 p-3 col-md-4 mx-auto my-4">
+        <h2>Mon profil formateur</h2>
+        <div class="text-center py-3">
+            {% if app.user.profilePicture %}
+                <img src="{{ asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" alt="photo de profile" class="img-teacher-profile">
+            {% endif %}
+        </div>
+
+        <form>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control"  id="email" placeholder="{{ app.user.email }}" readonly disabled>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="firstName" class="form-label">Prénom</label>
+                    <input type="email" class="form-control"  id="firstName" placeholder="{{ app.user.firstName }}" readonly disabled>
+                </div>
+                <div class="col">
+                    <label for="lastName" class="form-label">Nom</label>
+                    <input type="text" class="form-control"  id="lastName" placeholder="{{ app.user.lastName }}" readonly disabled>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" placeholder="{{ app.user.description }}" readonly disabled></textarea>
+            </div>
+            <div class="mb-3">
+                <a href="{{ path('app_edit_profile_teacher') }}" class="btn btn-success">Modifier</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
