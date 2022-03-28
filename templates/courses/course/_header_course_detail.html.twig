@@ -25,9 +25,9 @@
             </div>
             <div class="col-md-5 text-md-end">
                 {% if course.coursePicture %}
-                    <img class="img-course-detail" src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="" height="400">
+                    <img class="img-course-detail" src="{{ asset('uploads/course_pictures/' ~ course.coursePicture) }}" alt="illustration cours" height="400">
                 {% else %}
-                    <img src="{{ asset('img/logo.svg') }}" class="img-course-detail" alt="..." height="400">
+                    <img src="{{ asset('img/logo.svg') }}" class="img-course-detail" alt="illustration cours default" height="400">
                 {% endif %}
             </div>
         </div>
