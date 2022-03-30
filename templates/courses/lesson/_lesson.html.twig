@@ -1,7 +1,11 @@
 <div class="m-4 p-3 w-100">
     <div class="d-flex flex-wrap justify-content-between">
-        <h2>{{ lesson.title }}</h2>
-        {% include('courses/lesson/_previous_next.html.twig') %}
+        <div class="col-md-6">
+            <h2>{{ lesson.title }}</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            {% include('courses/lesson/_previous_next.html.twig') %}
+        </div>
     </div>
     {% if lesson.video %}
         <div class="py-3 p-lg-5">
@@ -10,10 +14,10 @@
             </div>
         </div>
     {% endif %}
-    <div class="pt-3">{{ lesson.lessonContent | striptags}}</div>
+    <div class="pt-3">{{ lesson.lessonContent | replace({'<h1>': '<h3>', "</h1>": "</h3>"}) | raw }}</div>
     <div class="d-flex flex-column py-3">
         {% if lesson.studyMaterials %}
-            <h4>Ressources</h4>
+            <h4 class="bg-green px-1">Ressources</h4>
             {% for studyMaterial in lesson.studyMaterials %}
                 <a target="_blank" class="text-decoration-underline" href="{{ asset('uploads/study_materials/' ~ studyMaterial.path) }}">{{ studyMaterial.title }}</a>
             {% else %}

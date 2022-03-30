@@ -1,7 +1,11 @@
 <div class="m-4 p-3 w-100">
     <div class="d-flex flex-wrap justify-content-between mb-3">
-        <h2>{{ quiz.title }}</h2>
-        {% include('courses/lesson/_previous_next.html.twig') %}
+        <div class="col-md-6">
+            <h2>{{ quiz.title }}</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            {% include('courses/lesson/_previous_next.html.twig') %}
+        </div>
     </div>
 
     <div id="#quiz" class="my-auto">
