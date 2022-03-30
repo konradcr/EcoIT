@@ -11,23 +11,26 @@
                 </span>
                 <div>
                     <ul class="fw-normal pb-1 mx-3 list-unstyled">
-                        {% for lesson in section.lessons | sort((a, b) => a.orderInSection <=> b.orderInSection ) %}
+                        {% for lessonn in section.lessons | sort((a, b) => a.orderInSection <=> b.orderInSection ) %}
                             <li>
                                 {% if courseProgress %}
-                                    {% if lesson in courseProgress.lessons %}
+                                    {% if lessonn in courseProgress.lessons %}
                                         <i class="bi bi-check-circle-fill"></i>
                                     {% else %}
                                         <i class="bi bi-circle"></i>
                                     {% endif %}
                                 {% endif %}
-
-                                <a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lesson.id }) }}" class="text-white">{{ lesson.title }}</a>
+                                {% if lesson is defined and lesson == lessonn %}
+                                    <span class="text-green">{{ lessonn.title }}</span>
+                                {% else %}
+                                    <a href="{{ path('app_lesson_detail', {'idCourse' : course.id, 'idLesson' : lessonn.id }) }}" class="text-white">{{ lessonn.title }}</a>
+                                {% endif %}
                             </li>
                         {% else %}
                             <li><em>Modules à venir</em></li>
                         {% endfor %}
                         {% for quiz in section.quizzes %}
-                            <li><a class="bi bi-mortarboard-fill text-decoration-none text-white" href="{{ path('app_quiz', {'idCourse': course.id, 'idQuiz': quiz.id}) }}"> {{ quiz.title }}</a></li>
+                            <li><em><a class="bi bi-mortarboard-fill text-decoration-none text-white" href="{{ path('app_quiz', {'idCourse': course.id, 'idQuiz': quiz.id}) }}"> {{ quiz.title }}</a></em></li>
                         {% endfor %}
                     </ul>
                 </div>

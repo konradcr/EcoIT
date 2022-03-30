@@ -24,6 +24,10 @@ body {
     color: white;
 }
 
+.text-green {
+    color: #5DA37B;
+}
+
 /* Header */
 header .nav-link {
     color: #4A5759;
