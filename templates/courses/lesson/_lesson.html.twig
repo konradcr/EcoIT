@@ -25,9 +25,15 @@
             {% endfor %}
         {% endif %}
     </div>
-    {% if app.user and app.user.roles == ["ROLE_STUDENT"] %}
-        <div class="text-end">
-            <a class="btn btn-success" href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a>
-        </div>
+    {% if app.user and app.user.roles == ["ROLE_STUDENT"] and courseProgress != NULL %}
+        {% if lesson in courseProgress.lessons %}
+            <div class="text-end">
+                <button class="btn btn-outline-success disabled">Terminé</button>
+            </div>
+        {% else %}
+            <div class="text-end">
+                <a class="btn btn-success" href="{{ path('app_complete_lesson', {'idCourse' : lesson.section.course.id, 'idLesson': lesson.id}) }}">Terminé</a>
+            </div>
+        {% endif %}
     {% endif %}
 </div>
