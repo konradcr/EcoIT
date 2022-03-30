@@ -74,7 +74,7 @@ class CourseCrudController extends AbstractCrudController
                 ->hideOnForm(),
             AssociationField::new('sections', 'Sections')
                 ->hideOnForm()
-                ->setTemplatePath('admin/fields/sections.html.twig'),
+                ->setTemplatePath('admin/fields/_sections.html.twig'),
             AssociationField::new('studentsCourseProgress', 'Nombre de participants')->hideOnForm()
         ];
     }

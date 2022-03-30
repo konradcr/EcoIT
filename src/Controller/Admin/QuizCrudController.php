@@ -55,7 +55,7 @@ class QuizCrudController extends AbstractCrudController
                 }),
             AssociationField::new('questions', 'Questions')
                 ->hideOnForm()
-                ->setTemplatePath('admin/fields/sections.html.twig'),
+                ->setTemplatePath('admin/fields/_sections.html.twig'),
         ];
     }
 

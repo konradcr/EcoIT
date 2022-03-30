@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block metaDescription %}{{ course.title }}, une formation EcoIT. {{ course.description }}{% endblock %}
 {% block title %}EcoIT - {{ course.title }}{% endblock %}
 
 {% block body %}

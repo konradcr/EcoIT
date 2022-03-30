@@ -68,7 +68,7 @@ class LessonCrudController extends AbstractCrudController
             UrlField::new('video', 'Lien vidéo'),
             AssociationField::new('studyMaterials', 'Ressources')
                 ->hideOnForm()
-                ->setTemplatePath('admin/fields/sections.html.twig'),
+                ->setTemplatePath('admin/fields/_sections.html.twig'),
             TextEditorField::new('lessonContent', 'Cours')
                 ->hideOnIndex(),
         ];

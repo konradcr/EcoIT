@@ -63,7 +63,7 @@ class SectionCrudController extends AbstractCrudController
             IntegerField::new('orderInCourse', 'Ordre'),
             AssociationField::new('lessons', 'Modules')
                 ->hideOnForm()
-                ->setTemplatePath('admin/fields/sections.html.twig'),
+                ->setTemplatePath('admin/fields/_sections.html.twig'),
         ];
     }
 
