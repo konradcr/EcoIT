@@ -34,6 +34,7 @@ class CourseCrudController extends AbstractCrudController
 
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
+        // query only courses from the teacher connected
         $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
         if ($this->getUser() instanceof Teacher) {
             $response->andWhere('entity.teacher = :user');

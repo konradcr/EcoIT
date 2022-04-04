@@ -16,6 +16,7 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
+        // if the user is a teacher, check that his account has been approved
         if ($user instanceof Teacher) {
             if (!$user->getIsApproved()) {
                 // the message passed to this exception is meant to be displayed to the user

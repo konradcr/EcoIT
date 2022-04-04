@@ -1,3 +1,4 @@
+<!-- START of LESSON -->
 <div class="m-4 p-3 w-100">
     <div class="d-flex flex-wrap justify-content-between">
         <div class="col-md-6">
@@ -7,6 +8,7 @@
             {% include('courses/lesson/_previous_next.html.twig') %}
         </div>
     </div>
+    <!-- LESSON VIDEO -->
     {% if lesson.video %}
         <div class="py-3 p-lg-5">
             <div class="text-center embed-responsive ratio ratio-16x9">
@@ -14,7 +16,9 @@
             </div>
         </div>
     {% endif %}
+    <!-- LESSON TEXT -->
     <div class="pt-3">{{ lesson.lessonContent | replace({'<h1>': '<h3>', "</h1>": "</h3>"}) | raw }}</div>
+    <!-- STUDY MATERIALS -->
     <div class="d-flex flex-column py-3">
         {% if lesson.studyMaterials %}
             <h4 class="bg-green px-1">Ressources</h4>
@@ -25,6 +29,7 @@
             {% endfor %}
         {% endif %}
     </div>
+    <!-- COMPLETE BUTTON -->
     {% if app.user and app.user.roles == ["ROLE_STUDENT"] and courseProgress != NULL %}
         {% if lesson in courseProgress.lessons %}
             <div class="text-end">
@@ -37,3 +42,4 @@
         {% endif %}
     {% endif %}
 </div>
+<!-- END of LESSON -->

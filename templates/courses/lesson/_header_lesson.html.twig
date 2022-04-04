@@ -1,5 +1,7 @@
+<!-- START of COURSE HEADER -->
 <div class="bg-light-green">
     <div class="container my-3">
+        <!-- BREADCRUMB -->
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
@@ -8,6 +10,7 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ lesson.title }}</li>
             </ol>
         </nav>
+        <!-- COURSE PROGRESS -->
         <div class="my-5 mx-2">
             <h1>{{ course.title }}</h1>
             {% if courseProgress %}
@@ -18,3 +21,4 @@
         </div>
     </div>
 </div>
+<!-- END of COURSE HEADER -->

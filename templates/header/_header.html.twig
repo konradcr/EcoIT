@@ -1,15 +1,17 @@
+<!-- START of HEADER -->
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between  py-3 mb-4 border-bottom">
+        <!-- LOGO -->
         <a href="{{ path('app_home') }}" class="d-flex align-items-center col-md-auto mb-2 mb-md-0 text-decoration-none">
             <img src="{{ asset('img/logo.svg') }}" width="60" height="50" alt="logo">
         </a>
-
+        <!-- NAV LINKS -->
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 ">
             <li><a href="{{ path('app_home') }}" class="nav-link px-md-2">Accueil</a></li>
             <li><a href="{{ path('app_courses') }}" class="nav-link px-md-2">Formations</a></li>
             <li><a href="{{ path('app_register_teacher') }}" class="nav-link px-md-2">Devenir formateur•trice</a></li>
         </ul>
-
+        <!-- USER MENU -->
         <div class="col-md-auto text-end ">
             {% if app.user %}
                 <div class="dropdown d-flex justify-content-end">
@@ -49,3 +51,4 @@
         </div>
     </header>
 </div>
+<!-- END of HEADER -->

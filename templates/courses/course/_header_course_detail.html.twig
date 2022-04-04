@@ -1,5 +1,7 @@
+<!-- START of COURSE HEADER -->
 <div class="bg-light-green">
     <div class="container my-3">
+        <!-- BREADCRUMB -->
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a class="fw-bold" href="{{ path('app_home') }}">Accueil</a></li>
@@ -7,6 +9,7 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ course.title }}</li>
             </ol>
         </nav>
+        <!-- COURSE DETAILS -->
         <div class="d-flex flex-wrap justify-content-md-between justify-content-center align-items-center">
             <div class="col-md-7 text-start me-auto">
                 <h1>{{ course.title }}</h1>
@@ -33,3 +36,4 @@
         </div>
     </div>
 </div>
+<!-- END of COURSE HEADER -->

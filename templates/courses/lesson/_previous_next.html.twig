@@ -3,7 +3,7 @@
 {% elseif quiz is defined %}
     {% set module = quiz %}
 {% endif %}
-
+<!-- START of PREVIOUS and NEXT BUTTONS -->
 <div>
     {% if module.previous %}
         {% if module.previous.type == 'lesson' %}
@@ -32,3 +32,4 @@
         {% endif %}
     {% endif %}
 </div>
+<!-- END of PREVIOUS and NEXT BUTTONS -->

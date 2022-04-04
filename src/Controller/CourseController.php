@@ -21,6 +21,7 @@ class CourseController extends AbstractController
     #[Route('/formations', name: 'app_courses')]
     public function index(CourseRepository $courseRepository): Response
     {
+        // fetch courses ordered by creationDate
         $courses = $courseRepository->findBy([], ['creationDate' => 'DESC']);
 
         return $this->render('courses/index.html.twig', [
@@ -31,9 +32,11 @@ class CourseController extends AbstractController
     #[Route('/formation/{id}', name: 'app_course_detail')]
     public function courseDetail(int $id, CourseRepository $courseRepository, CourseProgressRepository $courseProgressRepository, StudentRepository $studentRepository): Response
     {
+        // fetch a course by id
         $course = $courseRepository->findOneBy(['id' => $id]);
         $courseProgress = NULL;
 
+        // if the user is a student, try to fetch its courseProgress related to the course
         if ($this->getUser() instanceof Student) {
             $student = $studentRepository->findOneBy(['id' => $this->getUser()->getId()]);
             $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $student]);
@@ -52,6 +55,7 @@ class CourseController extends AbstractController
         $student = $studentRepository->findOneBy(['id' => $this->getUser()->getId()]);
         $course = $courseRepository->findOneBy(['id' => $id]);
 
+        // create a courseProgress for the student connected
         $courseProgress = new CourseProgress();
         $courseProgress->setStudent($student);
         $courseProgress->setCourse($course);
@@ -87,14 +91,17 @@ class CourseController extends AbstractController
 
         $courseProgress = $courseProgressRepository->findOneBy(['course' => $course, 'student' => $this->getUser()]);
 
+        // add lesson to lessons completed in the courseProgress to track the progress
         $courseProgress->addLesson($lesson);
 
         $totalOfLessons = 0;
+        // loop all sections of the course to count the total number of lessons
         foreach ($course->getSections() as $section) {
             $totalOfLessons += count($section->getLessons());
         }
+        // count the number of lessons completed
         $totalLessonCompleted = count($courseProgress->getLessons());
-
+        // calculate the progress of the student to the course
         $courseProgress->setProgress($totalLessonCompleted/$totalOfLessons);
 
         $entityManager->persist($courseProgress);

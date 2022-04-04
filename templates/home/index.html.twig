@@ -6,6 +6,7 @@
 {% block body %}
 <main>
     <div class="py-3">
+        <!-- GOALS -->
         <div class="container">
             <h1 class="pb-5">Le projet d'Eco Web</h1>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 text-center">
@@ -31,26 +32,28 @@
                     </div>
                 </div>
             </div>
-    </div>
-    <div class="text-center bg-light-green my-5">
+        </div>
+        <!-- REGISTRATION CALLER -->
+        <div class="text-center bg-light-green my-5">
+            <div class="container">
+                <div class="d-flex flex-wrap justify-content-evenly align-items-center p-4 m-4 py-5">
+                    <div class="col-md-8">
+                        <h3 class="">Rejoignez-nous et apprenez à concevoir vos projets de manière éco-responsable !</h3>
+                    </div>
+                    <div class="col-md-4 text-end py-2">
+                        <a class="btn btn-lg btn-success" href="{{ path('app_register_student') }}">Inscrivez-vous !</a>
+                    </div>
+                 </div>
+            </div>
+        </div>
+        <!-- LAST 3 COURSES -->
         <div class="container">
-            <div class="d-flex flex-wrap justify-content-evenly align-items-center p-4 m-4 py-5">
-                <div class="col-md-8">
-                    <h3 class="">Rejoignez-nous et apprenez à concevoir vos projets de manière éco-responsable !</h3>
-                </div>
-                <div class="col-md-4 text-end py-2">
-                    <a class="btn btn-lg btn-success" href="{{ path('app_register_student') }}">Inscrivez-vous !</a>
-                </div>
-             </div>
+            <div class="pb-5">
+                <h2 class="fw-bold">Nos dernières formations</h2>
+                <h3>Retrouvez nos dernières formations délivrées par des spécialistes du domaine.</h3>
+            </div>
+            {% include('courses/_courses_list.html.twig') %}
         </div>
     </div>
-    <div class="container">
-        <div class="pb-5">
-            <h2 class="fw-bold">Nos dernières formations</h2>
-            <h3>Retrouvez nos dernières formations délivrées par des spécialistes du domaine.</h3>
-        </div>
-        {% include('courses/_courses_list.html.twig') %}
-    </div>
-</div>
 </main>
 {% endblock %}
